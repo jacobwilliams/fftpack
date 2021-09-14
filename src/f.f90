@@ -1,896 +1,896 @@
 !*==CFFTB1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE CFFTB1(N,C,Ch,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine cfftb1(n,c,Ch,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--CFFTB15
 !*** Start of declarations inserted by SPAG
-      REAL C , Ch , FFTPACK_KIND , rk , Wa
-      INTEGER i , idl1 , ido , idot , Ifac , ip , iw , ix2 , ix3 , ix4 ,&
-            & k1 , l1 , l2 , N , n2 , na , nac , nf
+      real c , Ch , fftpack_kind , rk , Wa
+      integer i , idl1 , ido , idot , Ifac , ip , iw , ix2 , ix3 , ix4 ,&
+            & k1 , l1 , l2 , n , n2 , na , nac , nf
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(*) , C(*) , Wa(*) , Ifac(*)
+      dimension Ch(*) , c(*) , Wa(*) , Ifac(*)
       nf = Ifac(2)
       na = 0
       l1 = 1
       iw = 1
-      DO k1 = 1 , nf
+      do k1 = 1 , nf
          ip = Ifac(k1+2)
          l2 = ip*l1
-         ido = N/l2
+         ido = n/l2
          idot = ido + ido
          idl1 = idot*l1
-         IF ( ip==4 ) THEN
+         if ( ip==4 ) then
             ix2 = iw + idot
             ix3 = ix2 + idot
-            IF ( na/=0 ) THEN
-               CALL PASSB4(idot,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3))
-            ELSE
-               CALL PASSB4(idot,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3))
-            ENDIF
+            if ( na/=0 ) then
+               call passb4(idot,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3))
+            else
+               call passb4(idot,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3))
+            endif
             na = 1 - na
-         ELSEIF ( ip==2 ) THEN
-            IF ( na/=0 ) THEN
-               CALL PASSB2(idot,l1,Ch,C,Wa(iw))
-            ELSE
-               CALL PASSB2(idot,l1,C,Ch,Wa(iw))
-            ENDIF
+         elseif ( ip==2 ) then
+            if ( na/=0 ) then
+               call passb2(idot,l1,Ch,c,Wa(iw))
+            else
+               call passb2(idot,l1,c,Ch,Wa(iw))
+            endif
             na = 1 - na
-         ELSEIF ( ip==3 ) THEN
+         elseif ( ip==3 ) then
             ix2 = iw + idot
-            IF ( na/=0 ) THEN
-               CALL PASSB3(idot,l1,Ch,C,Wa(iw),Wa(ix2))
-            ELSE
-               CALL PASSB3(idot,l1,C,Ch,Wa(iw),Wa(ix2))
-            ENDIF
+            if ( na/=0 ) then
+               call passb3(idot,l1,Ch,c,Wa(iw),Wa(ix2))
+            else
+               call passb3(idot,l1,c,Ch,Wa(iw),Wa(ix2))
+            endif
             na = 1 - na
-         ELSEIF ( ip/=5 ) THEN
-            IF ( na/=0 ) THEN
-               CALL PASSB(nac,idot,ip,l1,idl1,Ch,Ch,Ch,C,C,Wa(iw))
-            ELSE
-               CALL PASSB(nac,idot,ip,l1,idl1,C,C,C,Ch,Ch,Wa(iw))
-            ENDIF
-            IF ( nac/=0 ) na = 1 - na
-         ELSE
+         elseif ( ip/=5 ) then
+            if ( na/=0 ) then
+               call passb(nac,idot,ip,l1,idl1,Ch,Ch,Ch,c,c,Wa(iw))
+            else
+               call passb(nac,idot,ip,l1,idl1,c,c,c,Ch,Ch,Wa(iw))
+            endif
+            if ( nac/=0 ) na = 1 - na
+         else
             ix2 = iw + idot
             ix3 = ix2 + idot
             ix4 = ix3 + idot
-            IF ( na/=0 ) THEN
-               CALL PASSB5(idot,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ELSE
-               CALL PASSB5(idot,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ENDIF
+            if ( na/=0 ) then
+               call passb5(idot,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            else
+               call passb5(idot,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            endif
             na = 1 - na
-         ENDIF
+         endif
          l1 = l2
          iw = iw + (ip-1)*idot
-      ENDDO
-      IF ( na==0 ) RETURN
-      n2 = N + N
-      DO i = 1 , n2
-         C(i) = Ch(i)
-      ENDDO
-      END
+      enddo
+      if ( na==0 ) return
+      n2 = n + n
+      do i = 1 , n2
+         c(i) = Ch(i)
+      enddo
+      end
 !*==CFFTF1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE CFFTF1(N,C,Ch,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine cfftf1(n,c,Ch,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--CFFTF177
 !*** Start of declarations inserted by SPAG
-      REAL C , Ch , FFTPACK_KIND , rk , Wa
-      INTEGER i , idl1 , ido , idot , Ifac , ip , iw , ix2 , ix3 , ix4 ,&
-            & k1 , l1 , l2 , N , n2 , na , nac , nf
+      real c , Ch , fftpack_kind , rk , Wa
+      integer i , idl1 , ido , idot , Ifac , ip , iw , ix2 , ix3 , ix4 ,&
+            & k1 , l1 , l2 , n , n2 , na , nac , nf
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(*) , C(*) , Wa(*) , Ifac(*)
+      dimension Ch(*) , c(*) , Wa(*) , Ifac(*)
       nf = Ifac(2)
       na = 0
       l1 = 1
       iw = 1
-      DO k1 = 1 , nf
+      do k1 = 1 , nf
          ip = Ifac(k1+2)
          l2 = ip*l1
-         ido = N/l2
+         ido = n/l2
          idot = ido + ido
          idl1 = idot*l1
-         IF ( ip==4 ) THEN
+         if ( ip==4 ) then
             ix2 = iw + idot
             ix3 = ix2 + idot
-            IF ( na/=0 ) THEN
-               CALL PASSF4(idot,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3))
-            ELSE
-               CALL PASSF4(idot,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3))
-            ENDIF
+            if ( na/=0 ) then
+               call passf4(idot,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3))
+            else
+               call passf4(idot,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3))
+            endif
             na = 1 - na
-         ELSEIF ( ip==2 ) THEN
-            IF ( na/=0 ) THEN
-               CALL PASSF2(idot,l1,Ch,C,Wa(iw))
-            ELSE
-               CALL PASSF2(idot,l1,C,Ch,Wa(iw))
-            ENDIF
+         elseif ( ip==2 ) then
+            if ( na/=0 ) then
+               call passf2(idot,l1,Ch,c,Wa(iw))
+            else
+               call passf2(idot,l1,c,Ch,Wa(iw))
+            endif
             na = 1 - na
-         ELSEIF ( ip==3 ) THEN
+         elseif ( ip==3 ) then
             ix2 = iw + idot
-            IF ( na/=0 ) THEN
-               CALL PASSF3(idot,l1,Ch,C,Wa(iw),Wa(ix2))
-            ELSE
-               CALL PASSF3(idot,l1,C,Ch,Wa(iw),Wa(ix2))
-            ENDIF
+            if ( na/=0 ) then
+               call passf3(idot,l1,Ch,c,Wa(iw),Wa(ix2))
+            else
+               call passf3(idot,l1,c,Ch,Wa(iw),Wa(ix2))
+            endif
             na = 1 - na
-         ELSEIF ( ip/=5 ) THEN
-            IF ( na/=0 ) THEN
-               CALL PASSF(nac,idot,ip,l1,idl1,Ch,Ch,Ch,C,C,Wa(iw))
-            ELSE
-               CALL PASSF(nac,idot,ip,l1,idl1,C,C,C,Ch,Ch,Wa(iw))
-            ENDIF
-            IF ( nac/=0 ) na = 1 - na
-         ELSE
+         elseif ( ip/=5 ) then
+            if ( na/=0 ) then
+               call passf(nac,idot,ip,l1,idl1,Ch,Ch,Ch,c,c,Wa(iw))
+            else
+               call passf(nac,idot,ip,l1,idl1,c,c,c,Ch,Ch,Wa(iw))
+            endif
+            if ( nac/=0 ) na = 1 - na
+         else
             ix2 = iw + idot
             ix3 = ix2 + idot
             ix4 = ix3 + idot
-            IF ( na/=0 ) THEN
-               CALL PASSF5(idot,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ELSE
-               CALL PASSF5(idot,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ENDIF
+            if ( na/=0 ) then
+               call passf5(idot,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            else
+               call passf5(idot,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            endif
             na = 1 - na
-         ENDIF
+         endif
          l1 = l2
          iw = iw + (ip-1)*idot
-      ENDDO
-      IF ( na==0 ) RETURN
-      n2 = N + N
-      DO i = 1 , n2
-         C(i) = Ch(i)
-      ENDDO
-      END
+      enddo
+      if ( na==0 ) return
+      n2 = n + n
+      do i = 1 , n2
+         c(i) = Ch(i)
+      enddo
+      end
 !*==CFFTI1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE CFFTI1(N,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine cffti1(n,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--CFFTI1149
 !*** Start of declarations inserted by SPAG
-      REAL arg , argh , argld , FFTPACK_KIND , fi , rk , tpi , Wa
-      INTEGER i , i1 , ib , ido , idot , Ifac , ii , ip , ipm , j , k1 ,&
-            & l1 , l2 , ld , N , nf , nl , nq , nr , ntry
-      INTEGER ntryh
+      real arg , argh , argld , fftpack_kind , fi , rk , tpi , Wa
+      integer i , i1 , ib , ido , idot , Ifac , ii , ip , ipm , j , k1 ,&
+            & l1 , l2 , ld , n , nf , nl , nq , nr , ntry
+      integer ntryh
 !*** End of declarations inserted by SPAG
-      DIMENSION Wa(*) , Ifac(*) , ntryh(4)
-      DATA ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/3 , 4 , 2 , 5/
-      nl = N
+      dimension Wa(*) , Ifac(*) , ntryh(4)
+      data ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/3 , 4 , 2 , 5/
+      nl = n
       nf = 0
       j = 0
  100  j = j + 1
-      IF ( j<=4 ) THEN
+      if ( j<=4 ) then
          ntry = ntryh(j)
-      ELSE
+      else
          ntry = ntry + 2
-      ENDIF
+      endif
  200  nq = nl/ntry
       nr = nl - ntry*nq
-      IF ( nr/=0 ) GOTO 100
+      if ( nr/=0 ) goto 100
       nf = nf + 1
       Ifac(nf+2) = ntry
       nl = nq
-      IF ( ntry==2 ) THEN
-         IF ( nf/=1 ) THEN
-            DO i = 2 , nf
+      if ( ntry==2 ) then
+         if ( nf/=1 ) then
+            do i = 2 , nf
                ib = nf - i + 2
                Ifac(ib+2) = Ifac(ib+1)
-            ENDDO
+            enddo
             Ifac(3) = 2
-         ENDIF
-      ENDIF
-      IF ( nl/=1 ) GOTO 200
-      Ifac(1) = N
+         endif
+      endif
+      if ( nl/=1 ) goto 200
+      Ifac(1) = n
       Ifac(2) = nf
-      tpi = 6.28318530717958647692D0
-      argh = tpi/REAL(N,rk)
+      tpi = 6.28318530717958647692d0
+      argh = tpi/real(n,rk)
       i = 2
       l1 = 1
-      DO k1 = 1 , nf
+      do k1 = 1 , nf
          ip = Ifac(k1+2)
          ld = 0
          l2 = l1*ip
-         ido = N/l2
+         ido = n/l2
          idot = ido + ido + 2
          ipm = ip - 1
-         DO j = 1 , ipm
+         do j = 1 , ipm
             i1 = i
-            Wa(i-1) = 1.0D0
-            Wa(i) = 0.0D0
+            Wa(i-1) = 1.0d0
+            Wa(i) = 0.0d0
             ld = ld + l1
-            fi = 0.0D0
-            argld = REAL(ld,rk)*argh
-            DO ii = 4 , idot , 2
+            fi = 0.0d0
+            argld = real(ld,rk)*argh
+            do ii = 4 , idot , 2
                i = i + 2
-               fi = fi + 1.D0
+               fi = fi + 1.d0
                arg = fi*argld
-               Wa(i-1) = COS(arg)
-               Wa(i) = SIN(arg)
-            ENDDO
-            IF ( ip>5 ) THEN
+               Wa(i-1) = cos(arg)
+               Wa(i) = sin(arg)
+            enddo
+            if ( ip>5 ) then
                Wa(i1-1) = Wa(i-1)
                Wa(i1) = Wa(i)
-            ENDIF
-         ENDDO
+            endif
+         enddo
          l1 = l2
-      ENDDO
-      END
+      enddo
+      end
 !*==COSQB1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE COSQB1(N,X,W,Xh)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine cosqb1(n,x,w,Xh)
+      use fftpack_kind
+      implicit none
 !*--COSQB1222
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , W , X , Xh , xim1
-      INTEGER i , k , kc , modn , N , np2 , ns2
+      real fftpack_kind , rk , w , x , Xh , xim1
+      integer i , k , kc , modn , n , np2 , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION X(1) , W(1) , Xh(1)
-      ns2 = (N+1)/2
-      np2 = N + 2
-      DO i = 3 , N , 2
-         xim1 = X(i-1) + X(i)
-         X(i) = X(i) - X(i-1)
-         X(i-1) = xim1
-      ENDDO
-      X(1) = X(1) + X(1)
-      modn = MOD(N,2)
-      IF ( modn==0 ) X(N) = X(N) + X(N)
-      CALL DFFTB(N,X,Xh)
-      DO k = 2 , ns2
+      dimension x(1) , w(1) , Xh(1)
+      ns2 = (n+1)/2
+      np2 = n + 2
+      do i = 3 , n , 2
+         xim1 = x(i-1) + x(i)
+         x(i) = x(i) - x(i-1)
+         x(i-1) = xim1
+      enddo
+      x(1) = x(1) + x(1)
+      modn = mod(n,2)
+      if ( modn==0 ) x(n) = x(n) + x(n)
+      call dfftb(n,x,Xh)
+      do k = 2 , ns2
          kc = np2 - k
-         Xh(k) = W(k-1)*X(kc) + W(kc-1)*X(k)
-         Xh(kc) = W(k-1)*X(k) - W(kc-1)*X(kc)
-      ENDDO
-      IF ( modn==0 ) X(ns2+1) = W(ns2)*(X(ns2+1)+X(ns2+1))
-      DO k = 2 , ns2
+         Xh(k) = w(k-1)*x(kc) + w(kc-1)*x(k)
+         Xh(kc) = w(k-1)*x(k) - w(kc-1)*x(kc)
+      enddo
+      if ( modn==0 ) x(ns2+1) = w(ns2)*(x(ns2+1)+x(ns2+1))
+      do k = 2 , ns2
          kc = np2 - k
-         X(k) = Xh(k) + Xh(kc)
-         X(kc) = Xh(k) - Xh(kc)
-      ENDDO
-      X(1) = X(1) + X(1)
-      END
+         x(k) = Xh(k) + Xh(kc)
+         x(kc) = Xh(k) - Xh(kc)
+      enddo
+      x(1) = x(1) + x(1)
+      end
 !*==COSQF1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE COSQF1(N,X,W,Xh)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine cosqf1(n,x,w,Xh)
+      use fftpack_kind
+      implicit none
 !*--COSQF1256
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , W , X , Xh , xim1
-      INTEGER i , k , kc , modn , N , np2 , ns2
+      real fftpack_kind , rk , w , x , Xh , xim1
+      integer i , k , kc , modn , n , np2 , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION X(1) , W(1) , Xh(1)
-      ns2 = (N+1)/2
-      np2 = N + 2
-      DO k = 2 , ns2
+      dimension x(1) , w(1) , Xh(1)
+      ns2 = (n+1)/2
+      np2 = n + 2
+      do k = 2 , ns2
          kc = np2 - k
-         Xh(k) = X(k) + X(kc)
-         Xh(kc) = X(k) - X(kc)
-      ENDDO
-      modn = MOD(N,2)
-      IF ( modn==0 ) Xh(ns2+1) = X(ns2+1) + X(ns2+1)
-      DO k = 2 , ns2
+         Xh(k) = x(k) + x(kc)
+         Xh(kc) = x(k) - x(kc)
+      enddo
+      modn = mod(n,2)
+      if ( modn==0 ) Xh(ns2+1) = x(ns2+1) + x(ns2+1)
+      do k = 2 , ns2
          kc = np2 - k
-         X(k) = W(k-1)*Xh(kc) + W(kc-1)*Xh(k)
-         X(kc) = W(k-1)*Xh(k) - W(kc-1)*Xh(kc)
-      ENDDO
-      IF ( modn==0 ) X(ns2+1) = W(ns2)*Xh(ns2+1)
-      CALL DFFTF(N,X,Xh)
-      DO i = 3 , N , 2
-         xim1 = X(i-1) - X(i)
-         X(i) = X(i-1) + X(i)
-         X(i-1) = xim1
-      ENDDO
-      END
+         x(k) = w(k-1)*Xh(kc) + w(kc-1)*Xh(k)
+         x(kc) = w(k-1)*Xh(k) - w(kc-1)*Xh(kc)
+      enddo
+      if ( modn==0 ) x(ns2+1) = w(ns2)*Xh(ns2+1)
+      call dfftf(n,x,Xh)
+      do i = 3 , n , 2
+         xim1 = x(i-1) - x(i)
+         x(i) = x(i-1) + x(i)
+         x(i-1) = xim1
+      enddo
+      end
 !*==DCOSQB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DCOSQB(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dcosqb(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DCOSQB288
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , tsqrt2 , Wsave , X , x1
-      INTEGER N
+      real fftpack_kind , rk , tsqrt2 , Wsave , x , x1
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION X(*) , Wsave(*)
-      DATA tsqrt2/2.82842712474619009760D0/
-      IF ( N<2 ) THEN
-         X(1) = 4.0D0*X(1)
-         RETURN
-      ELSEIF ( N==2 ) THEN
-         x1 = 4.0D0*(X(1)+X(2))
-         X(2) = tsqrt2*(X(1)-X(2))
-         X(1) = x1
-         RETURN
-      ELSE
-         CALL COSQB1(N,X,Wsave,Wsave(N+1))
-      ENDIF
-      END
+      dimension x(*) , Wsave(*)
+      data tsqrt2/2.82842712474619009760d0/
+      if ( n<2 ) then
+         x(1) = 4.0d0*x(1)
+         return
+      elseif ( n==2 ) then
+         x1 = 4.0d0*(x(1)+x(2))
+         x(2) = tsqrt2*(x(1)-x(2))
+         x(1) = x1
+         return
+      else
+         call cosqb1(n,x,Wsave,Wsave(n+1))
+      endif
+      end
 !*==DCOSQF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DCOSQF(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dcosqf(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DCOSQF311
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , sqrt2 , tsqx , Wsave , X
-      INTEGER N
+      real fftpack_kind , rk , sqrt2 , tsqx , Wsave , x
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION X(*) , Wsave(*)
-      DATA sqrt2/1.41421356237309504880D0/
-      IF ( N<2 ) THEN
-      ELSEIF ( N==2 ) THEN
-         tsqx = sqrt2*X(2)
-         X(2) = X(1) - tsqx
-         X(1) = X(1) + tsqx
-      ELSE
-         CALL COSQF1(N,X,Wsave,Wsave(N+1))
-         GOTO 99999
-      ENDIF
-      RETURN
-99999 END
+      dimension x(*) , Wsave(*)
+      data sqrt2/1.41421356237309504880d0/
+      if ( n<2 ) then
+      elseif ( n==2 ) then
+         tsqx = sqrt2*x(2)
+         x(2) = x(1) - tsqx
+         x(1) = x(1) + tsqx
+      else
+         call cosqf1(n,x,Wsave,Wsave(n+1))
+         goto 99999
+      endif
+      return
+99999 end
 !*==DCOSQI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DCOSQI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dcosqi(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DCOSQI333
 !*** Start of declarations inserted by SPAG
-      REAL dt , FFTPACK_KIND , fk , pih , rk , Wsave
-      INTEGER k , N
+      real dt , fftpack_kind , fk , pih , rk , Wsave
+      integer k , n
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      DATA pih/1.57079632679489661923D0/
-      dt = pih/REAL(N,rk)
-      fk = 0.0D0
-      DO k = 1 , N
-         fk = fk + 1.0D0
-         Wsave(k) = COS(fk*dt)
-      ENDDO
-      CALL DFFTI(N,Wsave(N+1))
-      END
+      dimension Wsave(1)
+      data pih/1.57079632679489661923d0/
+      dt = pih/real(n,rk)
+      fk = 0.0d0
+      do k = 1 , n
+         fk = fk + 1.0d0
+         Wsave(k) = cos(fk*dt)
+      enddo
+      call dffti(n,Wsave(n+1))
+      end
 !*==DCOST.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DCOST(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dcost(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DCOST352
 !*** Start of declarations inserted by SPAG
-      REAL c1 , FFTPACK_KIND , rk , t1 , t2 , tx2 , Wsave , X , x1h ,   &
+      real c1 , fftpack_kind , rk , t1 , t2 , tx2 , Wsave , x , x1h ,   &
          & x1p3 , xi , xim2
-      INTEGER i , k , kc , modn , N , nm1 , np1 , ns2
+      integer i , k , kc , modn , n , nm1 , np1 , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION X(*) , Wsave(*)
-      nm1 = N - 1
-      np1 = N + 1
-      ns2 = N/2
-      IF ( N<2 ) GOTO 99999
-      IF ( N==2 ) THEN
-         x1h = X(1) + X(2)
-         X(2) = X(1) - X(2)
-         X(1) = x1h
-         RETURN
-      ELSEIF ( N>3 ) THEN
-         c1 = X(1) - X(N)
-         X(1) = X(1) + X(N)
-         DO k = 2 , ns2
+      dimension x(*) , Wsave(*)
+      nm1 = n - 1
+      np1 = n + 1
+      ns2 = n/2
+      if ( n<2 ) goto 99999
+      if ( n==2 ) then
+         x1h = x(1) + x(2)
+         x(2) = x(1) - x(2)
+         x(1) = x1h
+         return
+      elseif ( n>3 ) then
+         c1 = x(1) - x(n)
+         x(1) = x(1) + x(n)
+         do k = 2 , ns2
             kc = np1 - k
-            t1 = X(k) + X(kc)
-            t2 = X(k) - X(kc)
+            t1 = x(k) + x(kc)
+            t2 = x(k) - x(kc)
             c1 = c1 + Wsave(kc)*t2
             t2 = Wsave(k)*t2
-            X(k) = t1 - t2
-            X(kc) = t1 + t2
-         ENDDO
-         modn = MOD(N,2)
-         IF ( modn/=0 ) X(ns2+1) = X(ns2+1) + X(ns2+1)
-         CALL DFFTF(nm1,X,Wsave(N+1))
-         xim2 = X(2)
-         X(2) = c1
-         DO i = 4 , N , 2
-            xi = X(i)
-            X(i) = X(i-2) - X(i-1)
-            X(i-1) = xim2
+            x(k) = t1 - t2
+            x(kc) = t1 + t2
+         enddo
+         modn = mod(n,2)
+         if ( modn/=0 ) x(ns2+1) = x(ns2+1) + x(ns2+1)
+         call dfftf(nm1,x,Wsave(n+1))
+         xim2 = x(2)
+         x(2) = c1
+         do i = 4 , n , 2
+            xi = x(i)
+            x(i) = x(i-2) - x(i-1)
+            x(i-1) = xim2
             xim2 = xi
-         ENDDO
-         IF ( modn/=0 ) X(N) = xim2
-         GOTO 99999
-      ENDIF
-      x1p3 = X(1) + X(3)
-      tx2 = X(2) + X(2)
-      X(2) = X(1) - X(3)
-      X(1) = x1p3 + tx2
-      X(3) = x1p3 - tx2
-      RETURN
-99999 END
+         enddo
+         if ( modn/=0 ) x(n) = xim2
+         goto 99999
+      endif
+      x1p3 = x(1) + x(3)
+      tx2 = x(2) + x(2)
+      x(2) = x(1) - x(3)
+      x(1) = x1p3 + tx2
+      x(3) = x1p3 - tx2
+      return
+99999 end
 !*==DCOSTI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DCOSTI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dcosti(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DCOSTI405
 !*** Start of declarations inserted by SPAG
-      REAL dt , FFTPACK_KIND , fk , pi , rk , Wsave
-      INTEGER k , kc , N , nm1 , np1 , ns2
+      real dt , fftpack_kind , fk , pi , rk , Wsave
+      integer k , kc , n , nm1 , np1 , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      DATA pi/3.14159265358979323846D0/
-      IF ( N<=3 ) RETURN
-      nm1 = N - 1
-      np1 = N + 1
-      ns2 = N/2
-      dt = pi/REAL(nm1,rk)
-      fk = 0.0D0
-      DO k = 2 , ns2
+      dimension Wsave(1)
+      data pi/3.14159265358979323846d0/
+      if ( n<=3 ) return
+      nm1 = n - 1
+      np1 = n + 1
+      ns2 = n/2
+      dt = pi/real(nm1,rk)
+      fk = 0.0d0
+      do k = 2 , ns2
          kc = np1 - k
-         fk = fk + 1.0D0
-         Wsave(k) = 2.0D0*SIN(fk*dt)
-         Wsave(kc) = 2.0D0*COS(fk*dt)
-      ENDDO
-      CALL DFFTI(nm1,Wsave(N+1))
-      END
+         fk = fk + 1.0d0
+         Wsave(k) = 2.0d0*sin(fk*dt)
+         Wsave(kc) = 2.0d0*cos(fk*dt)
+      enddo
+      call dffti(nm1,Wsave(n+1))
+      end
 !*==DFFTB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DFFTB(N,R,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dfftb(n,r,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DFFTB430
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , R , rk , Wsave
-      INTEGER N
+      real fftpack_kind , r , rk , Wsave
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION R(1) , Wsave(1)
-      IF ( N==1 ) RETURN
-      CALL RFFTB1(N,R,Wsave,Wsave(N+1),Wsave(2*N+1))
-      END
+      dimension r(1) , Wsave(1)
+      if ( n==1 ) return
+      call rfftb1(n,r,Wsave,Wsave(n+1),Wsave(2*n+1))
+      end
 !*==DFFTF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DFFTF(N,R,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dfftf(n,r,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DFFTF443
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , R , rk , Wsave
-      INTEGER N
+      real fftpack_kind , r , rk , Wsave
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION R(1) , Wsave(1)
-      IF ( N==1 ) RETURN
-      CALL RFFTF1(N,R,Wsave,Wsave(N+1),Wsave(2*N+1))
-      END
+      dimension r(1) , Wsave(1)
+      if ( n==1 ) return
+      call rfftf1(n,r,Wsave,Wsave(n+1),Wsave(2*n+1))
+      end
 !*==DFFTI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DFFTI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dffti(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DFFTI456
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave
-      INTEGER N
+      real fftpack_kind , rk , Wsave
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      IF ( N==1 ) RETURN
-      CALL RFFTI1(N,Wsave(N+1),Wsave(2*N+1))
-      END
+      dimension Wsave(1)
+      if ( n==1 ) return
+      call rffti1(n,Wsave(n+1),Wsave(2*n+1))
+      end
 !*==DSINQB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DSINQB(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dsinqb(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DSINQB469
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave , X , xhold
-      INTEGER k , kc , N , ns2
+      real fftpack_kind , rk , Wsave , x , xhold
+      integer k , kc , n , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION X(1) , Wsave(1)
-      IF ( N>1 ) THEN
-         ns2 = N/2
-         DO k = 2 , N , 2
-            X(k) = -X(k)
-         ENDDO
-         CALL DCOSQB(N,X,Wsave)
-         DO k = 1 , ns2
-            kc = N - k
-            xhold = X(k)
-            X(k) = X(kc+1)
-            X(kc+1) = xhold
-         ENDDO
-         GOTO 99999
-      ENDIF
-      X(1) = 4.0D0*X(1)
-      RETURN
-99999 END
+      dimension x(1) , Wsave(1)
+      if ( n>1 ) then
+         ns2 = n/2
+         do k = 2 , n , 2
+            x(k) = -x(k)
+         enddo
+         call dcosqb(n,x,Wsave)
+         do k = 1 , ns2
+            kc = n - k
+            xhold = x(k)
+            x(k) = x(kc+1)
+            x(kc+1) = xhold
+         enddo
+         goto 99999
+      endif
+      x(1) = 4.0d0*x(1)
+      return
+99999 end
 !*==DSINQF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DSINQF(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dsinqf(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DSINQF496
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave , X , xhold
-      INTEGER k , kc , N , ns2
+      real fftpack_kind , rk , Wsave , x , xhold
+      integer k , kc , n , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION X(1) , Wsave(1)
-      IF ( N==1 ) RETURN
-      ns2 = N/2
-      DO k = 1 , ns2
-         kc = N - k
-         xhold = X(k)
-         X(k) = X(kc+1)
-         X(kc+1) = xhold
-      ENDDO
-      CALL DCOSQF(N,X,Wsave)
-      DO k = 2 , N , 2
-         X(k) = -X(k)
-      ENDDO
-      END
+      dimension x(1) , Wsave(1)
+      if ( n==1 ) return
+      ns2 = n/2
+      do k = 1 , ns2
+         kc = n - k
+         xhold = x(k)
+         x(k) = x(kc+1)
+         x(kc+1) = xhold
+      enddo
+      call dcosqf(n,x,Wsave)
+      do k = 2 , n , 2
+         x(k) = -x(k)
+      enddo
+      end
 !*==DSINQI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DSINQI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dsinqi(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DSINQI519
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave
-      INTEGER N
+      real fftpack_kind , rk , Wsave
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      CALL DCOSQI(N,Wsave)
-      END
+      dimension Wsave(1)
+      call dcosqi(n,Wsave)
+      end
 !*==DSINT.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DSINT(N,X,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dsint(n,x,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DSINT531
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave , X
-      INTEGER iw1 , iw2 , iw3 , N , np1
+      real fftpack_kind , rk , Wsave , x
+      integer iw1 , iw2 , iw3 , n , np1
 !*** End of declarations inserted by SPAG
-      DIMENSION X(1) , Wsave(1)
-      np1 = N + 1
-      iw1 = N/2 + 1
+      dimension x(1) , Wsave(1)
+      np1 = n + 1
+      iw1 = n/2 + 1
       iw2 = iw1 + np1
       iw3 = iw2 + np1
-      CALL SINT1(N,X,Wsave,Wsave(iw1),Wsave(iw2),Wsave(iw3))
-      END
+      call sint1(n,x,Wsave,Wsave(iw1),Wsave(iw2),Wsave(iw3))
+      end
 !*==DSINTI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DSINTI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dsinti(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DSINTI547
 !*** Start of declarations inserted by SPAG
-      REAL dt , FFTPACK_KIND , pi , rk , Wsave
-      INTEGER k , N , np1 , ns2
+      real dt , fftpack_kind , pi , rk , Wsave
+      integer k , n , np1 , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      DATA pi/3.14159265358979323846D0/
-      IF ( N<=1 ) RETURN
-      ns2 = N/2
-      np1 = N + 1
-      dt = pi/REAL(np1,rk)
-      DO k = 1 , ns2
-         Wsave(k) = 2.0D0*SIN(k*dt)
-      ENDDO
-      CALL DFFTI(np1,Wsave(ns2+1))
-      END
+      dimension Wsave(1)
+      data pi/3.14159265358979323846d0/
+      if ( n<=1 ) return
+      ns2 = n/2
+      np1 = n + 1
+      dt = pi/real(np1,rk)
+      do k = 1 , ns2
+         Wsave(k) = 2.0d0*sin(k*dt)
+      enddo
+      call dffti(np1,Wsave(ns2+1))
+      end
 !*==DZFFTB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DZFFTB(N,R,Azero,A,B,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dzfftb(n,r,Azero,a,b,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DZFFTB567
 !*** Start of declarations inserted by SPAG
-      REAL A , Azero , B , FFTPACK_KIND , R , rk , Wsave
-      INTEGER i , N , ns2
+      real a , Azero , b , fftpack_kind , r , rk , Wsave
+      integer i , n , ns2
 !*** End of declarations inserted by SPAG
-      DIMENSION R(*) , A(*) , B(*) , Wsave(*)
-      IF ( N<2 ) THEN
-         R(1) = Azero
-         RETURN
-      ELSEIF ( N==2 ) THEN
-         R(1) = Azero + A(1)
-         R(2) = Azero - A(1)
-         RETURN
-      ELSE
-         ns2 = (N-1)/2
-         DO i = 1 , ns2
-            R(2*i) = 0.5D0*A(i)
-            R(2*i+1) = -0.5D0*B(i)
-         ENDDO
-         R(1) = Azero
-         IF ( MOD(N,2)==0 ) R(N) = A(ns2+1)
-         CALL DFFTB(N,R,Wsave(N+1))
-      ENDIF
-      END
+      dimension r(*) , a(*) , b(*) , Wsave(*)
+      if ( n<2 ) then
+         r(1) = Azero
+         return
+      elseif ( n==2 ) then
+         r(1) = Azero + a(1)
+         r(2) = Azero - a(1)
+         return
+      else
+         ns2 = (n-1)/2
+         do i = 1 , ns2
+            r(2*i) = 0.5d0*a(i)
+            r(2*i+1) = -0.5d0*b(i)
+         enddo
+         r(1) = Azero
+         if ( mod(n,2)==0 ) r(n) = a(ns2+1)
+         call dfftb(n,r,Wsave(n+1))
+      endif
+      end
 !*==DZFFTF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DZFFTF(N,R,Azero,A,B,Wsave)
+      subroutine dzfftf(n,r,Azero,a,b,Wsave)
 !
 !                       VERSION 3  JUNE 1979
 !
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      use fftpack_kind
+      implicit none
 !*--DZFFTF598
 !*** Start of declarations inserted by SPAG
-      REAL A , Azero , B , cf , cfm , FFTPACK_KIND , R , rk , Wsave
-      INTEGER i , N , ns2 , ns2m
+      real a , Azero , b , cf , cfm , fftpack_kind , r , rk , Wsave
+      integer i , n , ns2 , ns2m
 !*** End of declarations inserted by SPAG
-      DIMENSION R(*) , A(*) , B(*) , Wsave(*)
-      IF ( N<2 ) THEN
-         Azero = R(1)
-         RETURN
-      ELSEIF ( N==2 ) THEN
-         Azero = 0.5D0*(R(1)+R(2))
-         A(1) = 0.5D0*(R(1)-R(2))
-         RETURN
-      ELSE
-         DO i = 1 , N
-            Wsave(i) = R(i)
-         ENDDO
-         CALL DFFTF(N,Wsave,Wsave(N+1))
-         cf = 2.0D0/REAL(N,rk)
+      dimension r(*) , a(*) , b(*) , Wsave(*)
+      if ( n<2 ) then
+         Azero = r(1)
+         return
+      elseif ( n==2 ) then
+         Azero = 0.5d0*(r(1)+r(2))
+         a(1) = 0.5d0*(r(1)-r(2))
+         return
+      else
+         do i = 1 , n
+            Wsave(i) = r(i)
+         enddo
+         call dfftf(n,Wsave,Wsave(n+1))
+         cf = 2.0d0/real(n,rk)
          cfm = -cf
-         Azero = 0.5D0*cf*Wsave(1)
-         ns2 = (N+1)/2
+         Azero = 0.5d0*cf*Wsave(1)
+         ns2 = (n+1)/2
          ns2m = ns2 - 1
-         DO i = 1 , ns2m
-            A(i) = cf*Wsave(2*i)
-            B(i) = cfm*Wsave(2*i+1)
-         ENDDO
-         IF ( MOD(N,2)==1 ) RETURN
-         A(ns2) = 0.5D0*cf*Wsave(N)
-         B(ns2) = 0.0D0
-      ENDIF
-      END
+         do i = 1 , ns2m
+            a(i) = cf*Wsave(2*i)
+            b(i) = cfm*Wsave(2*i+1)
+         enddo
+         if ( mod(n,2)==1 ) return
+         a(ns2) = 0.5d0*cf*Wsave(n)
+         b(ns2) = 0.0d0
+      endif
+      end
 !*==DZFFTI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE DZFFTI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine dzffti(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--DZFFTI634
 !*** Start of declarations inserted by SPAG
-      REAL FFTPACK_KIND , rk , Wsave
-      INTEGER N
+      real fftpack_kind , rk , Wsave
+      integer n
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      IF ( N==1 ) RETURN
-      CALL EZFFT1(N,Wsave(2*N+1),Wsave(3*N+1))
-      END
+      dimension Wsave(1)
+      if ( n==1 ) return
+      call ezfft1(n,Wsave(2*n+1),Wsave(3*n+1))
+      end
 !*==EZFFT1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE EZFFT1(N,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine ezfft1(n,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--EZFFT1647
 !*** Start of declarations inserted by SPAG
-      REAL arg1 , argh , ch1 , ch1h , dch1 , dsh1 , FFTPACK_KIND , rk , &
+      real arg1 , argh , ch1 , ch1h , dch1 , dsh1 , fftpack_kind , rk , &
          & sh1 , tpi , Wa
-      INTEGER i , ib , ido , Ifac , ii , ip , ipm , is , j , k1 , l1 ,  &
-            & l2 , N , nf , nfm1 , nl , nq , nr , ntry , ntryh
+      integer i , ib , ido , Ifac , ii , ip , ipm , is , j , k1 , l1 ,  &
+            & l2 , n , nf , nfm1 , nl , nq , nr , ntry , ntryh
 !*** End of declarations inserted by SPAG
-      DIMENSION Wa(*) , Ifac(*) , ntryh(4)
-      DATA ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/4 , 2 , 3 , 5/ ,   &
-         & tpi/6.28318530717958647692D0/
-      nl = N
+      dimension Wa(*) , Ifac(*) , ntryh(4)
+      data ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/4 , 2 , 3 , 5/ ,   &
+         & tpi/6.28318530717958647692d0/
+      nl = n
       nf = 0
       j = 0
  100  j = j + 1
-      IF ( j<=4 ) THEN
+      if ( j<=4 ) then
          ntry = ntryh(j)
-      ELSE
+      else
          ntry = ntry + 2
-      ENDIF
+      endif
  200  nq = nl/ntry
       nr = nl - ntry*nq
-      IF ( nr/=0 ) GOTO 100
+      if ( nr/=0 ) goto 100
       nf = nf + 1
       Ifac(nf+2) = ntry
       nl = nq
-      IF ( ntry==2 ) THEN
-         IF ( nf/=1 ) THEN
-            DO i = 2 , nf
+      if ( ntry==2 ) then
+         if ( nf/=1 ) then
+            do i = 2 , nf
                ib = nf - i + 2
                Ifac(ib+2) = Ifac(ib+1)
-            ENDDO
+            enddo
             Ifac(3) = 2
-         ENDIF
-      ENDIF
-      IF ( nl/=1 ) GOTO 200
-      Ifac(1) = N
+         endif
+      endif
+      if ( nl/=1 ) goto 200
+      Ifac(1) = n
       Ifac(2) = nf
-      argh = tpi/REAL(N,rk)
+      argh = tpi/real(n,rk)
       is = 0
       nfm1 = nf - 1
       l1 = 1
-      IF ( nfm1==0 ) RETURN
-      DO k1 = 1 , nfm1
+      if ( nfm1==0 ) return
+      do k1 = 1 , nfm1
          ip = Ifac(k1+2)
          l2 = l1*ip
-         ido = N/l2
+         ido = n/l2
          ipm = ip - 1
-         arg1 = REAL(l1,rk)*argh
-         ch1 = 1.0D0
-         sh1 = 0.0D0
-         dch1 = COS(arg1)
-         dsh1 = SIN(arg1)
-         DO j = 1 , ipm
+         arg1 = real(l1,rk)*argh
+         ch1 = 1.0d0
+         sh1 = 0.0d0
+         dch1 = cos(arg1)
+         dsh1 = sin(arg1)
+         do j = 1 , ipm
             ch1h = dch1*ch1 - dsh1*sh1
             sh1 = dch1*sh1 + dsh1*ch1
             ch1 = ch1h
             i = is + 2
             Wa(i-1) = ch1
             Wa(i) = sh1
-            IF ( ido>=5 ) THEN
-               DO ii = 5 , ido , 2
+            if ( ido>=5 ) then
+               do ii = 5 , ido , 2
                   i = i + 2
                   Wa(i-1) = ch1*Wa(i-3) - sh1*Wa(i-2)
                   Wa(i) = ch1*Wa(i-2) + sh1*Wa(i-3)
-               ENDDO
-            ENDIF
+               enddo
+            endif
             is = is + ido
-         ENDDO
+         enddo
          l1 = l2
-      ENDDO
-      END
+      enddo
+      end
 !*==PASSB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSB(Nac,Ido,Ip,L1,Idl1,Cc,C1,C2,Ch,Ch2,Wa)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passb(Nac,Ido,Ip,l1,Idl1,Cc,c1,c2,Ch,Ch2,Wa)
+      use fftpack_kind
+      implicit none
 !*--PASSB722
 !*** Start of declarations inserted by SPAG
-      REAL C1 , C2 , Cc , Ch , Ch2 , FFTPACK_KIND , rk , Wa , wai , war
-      INTEGER i , idij , idj , idl , Idl1 , idlj , Ido , idot , idp ,   &
-            & ik , inc , Ip , ipp2 , ipph , j , jc , k , l , L1 , lc
-      INTEGER Nac , nt
+      real c1 , c2 , Cc , Ch , Ch2 , fftpack_kind , rk , Wa , wai , war
+      integer i , idij , idj , idl , Idl1 , idlj , Ido , idot , idp ,   &
+            & ik , inc , Ip , ipp2 , ipph , j , jc , k , l , l1 , lc
+      integer Nac , nt
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,L1,Ip) , Cc(Ido,Ip,L1) , C1(Ido,L1,Ip) , Wa(1) , &
-              & C2(Idl1,Ip) , Ch2(Idl1,Ip)
+      dimension Ch(Ido,l1,Ip) , Cc(Ido,Ip,l1) , c1(Ido,l1,Ip) , Wa(1) , &
+              & c2(Idl1,Ip) , Ch2(Idl1,Ip)
       idot = Ido/2
       nt = Ip*Idl1
       ipp2 = Ip + 2
       ipph = (Ip+1)/2
       idp = Ip*Ido
 !
-      IF ( Ido<L1 ) THEN
-         DO j = 2 , ipph
+      if ( Ido<l1 ) then
+         do j = 2 , ipph
             jc = ipp2 - j
-            DO i = 1 , Ido
-               DO k = 1 , L1
+            do i = 1 , Ido
+               do k = 1 , l1
                   Ch(i,k,j) = Cc(i,j,k) + Cc(i,jc,k)
                   Ch(i,k,jc) = Cc(i,j,k) - Cc(i,jc,k)
-               ENDDO
-            ENDDO
-         ENDDO
-         DO i = 1 , Ido
-            DO k = 1 , L1
+               enddo
+            enddo
+         enddo
+         do i = 1 , Ido
+            do k = 1 , l1
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ELSE
-         DO j = 2 , ipph
+            enddo
+         enddo
+      else
+         do j = 2 , ipph
             jc = ipp2 - j
-            DO k = 1 , L1
-               DO i = 1 , Ido
+            do k = 1 , l1
+               do i = 1 , Ido
                   Ch(i,k,j) = Cc(i,j,k) + Cc(i,jc,k)
                   Ch(i,k,jc) = Cc(i,j,k) - Cc(i,jc,k)
-               ENDDO
-            ENDDO
-         ENDDO
-         DO k = 1 , L1
-            DO i = 1 , Ido
+               enddo
+            enddo
+         enddo
+         do k = 1 , l1
+            do i = 1 , Ido
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ENDIF
+            enddo
+         enddo
+      endif
       idl = 2 - Ido
       inc = 0
-      DO l = 2 , ipph
+      do l = 2 , ipph
          lc = ipp2 - l
          idl = idl + Ido
-         DO ik = 1 , Idl1
-            C2(ik,l) = Ch2(ik,1) + Wa(idl-1)*Ch2(ik,2)
-            C2(ik,lc) = Wa(idl)*Ch2(ik,Ip)
-         ENDDO
+         do ik = 1 , Idl1
+            c2(ik,l) = Ch2(ik,1) + Wa(idl-1)*Ch2(ik,2)
+            c2(ik,lc) = Wa(idl)*Ch2(ik,Ip)
+         enddo
          idlj = idl
          inc = inc + Ido
-         DO j = 3 , ipph
+         do j = 3 , ipph
             jc = ipp2 - j
             idlj = idlj + inc
-            IF ( idlj>idp ) idlj = idlj - idp
+            if ( idlj>idp ) idlj = idlj - idp
             war = Wa(idlj-1)
             wai = Wa(idlj)
-            DO ik = 1 , Idl1
-               C2(ik,l) = C2(ik,l) + war*Ch2(ik,j)
-               C2(ik,lc) = C2(ik,lc) + wai*Ch2(ik,jc)
-            ENDDO
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
-         DO ik = 1 , Idl1
+            do ik = 1 , Idl1
+               c2(ik,l) = c2(ik,l) + war*Ch2(ik,j)
+               c2(ik,lc) = c2(ik,lc) + wai*Ch2(ik,jc)
+            enddo
+         enddo
+      enddo
+      do j = 2 , ipph
+         do ik = 1 , Idl1
             Ch2(ik,1) = Ch2(ik,1) + Ch2(ik,j)
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
+         enddo
+      enddo
+      do j = 2 , ipph
          jc = ipp2 - j
-         DO ik = 2 , Idl1 , 2
-            Ch2(ik-1,j) = C2(ik-1,j) - C2(ik,jc)
-            Ch2(ik-1,jc) = C2(ik-1,j) + C2(ik,jc)
-            Ch2(ik,j) = C2(ik,j) + C2(ik-1,jc)
-            Ch2(ik,jc) = C2(ik,j) - C2(ik-1,jc)
-         ENDDO
-      ENDDO
+         do ik = 2 , Idl1 , 2
+            Ch2(ik-1,j) = c2(ik-1,j) - c2(ik,jc)
+            Ch2(ik-1,jc) = c2(ik-1,j) + c2(ik,jc)
+            Ch2(ik,j) = c2(ik,j) + c2(ik-1,jc)
+            Ch2(ik,jc) = c2(ik,j) - c2(ik-1,jc)
+         enddo
+      enddo
       Nac = 1
-      IF ( Ido==2 ) RETURN
+      if ( Ido==2 ) return
       Nac = 0
-      DO ik = 1 , Idl1
-         C2(ik,1) = Ch2(ik,1)
-      ENDDO
-      DO j = 2 , Ip
-         DO k = 1 , L1
-            C1(1,k,j) = Ch(1,k,j)
-            C1(2,k,j) = Ch(2,k,j)
-         ENDDO
-      ENDDO
-      IF ( idot>L1 ) THEN
+      do ik = 1 , Idl1
+         c2(ik,1) = Ch2(ik,1)
+      enddo
+      do j = 2 , Ip
+         do k = 1 , l1
+            c1(1,k,j) = Ch(1,k,j)
+            c1(2,k,j) = Ch(2,k,j)
+         enddo
+      enddo
+      if ( idot>l1 ) then
          idj = 2 - Ido
-         DO j = 2 , Ip
+         do j = 2 , Ip
             idj = idj + Ido
-            DO k = 1 , L1
+            do k = 1 , l1
                idij = idj
-               DO i = 4 , Ido , 2
+               do i = 4 , Ido , 2
                   idij = idij + 2
-                  C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
+                  c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
                               & *Ch(i,k,j)
-                  C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
+                  c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
                             & *Ch(i-1,k,j)
-               ENDDO
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
+               enddo
+            enddo
+         enddo
+         goto 99999
+      endif
       idij = 0
-      DO j = 2 , Ip
+      do j = 2 , Ip
          idij = idij + 2
-         DO i = 4 , Ido , 2
+         do i = 4 , Ido , 2
             idij = idij + 2
-            DO k = 1 , L1
-               C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)*Ch(i,k,j)
-               C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)*Ch(i-1,k,j)
-            ENDDO
-         ENDDO
-      ENDDO
-      RETURN
-99999 END
+            do k = 1 , l1
+               c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)*Ch(i,k,j)
+               c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)*Ch(i-1,k,j)
+            enddo
+         enddo
+      enddo
+      return
+99999 end
 !*==PASSB2.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSB2(Ido,L1,Cc,Ch,Wa1)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passb2(Ido,l1,Cc,Ch,Wa1)
+      use fftpack_kind
+      implicit none
 !*--PASSB2851
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , FFTPACK_KIND , rk , ti2 , tr2 , Wa1
-      INTEGER i , Ido , k , L1
+      real Cc , Ch , fftpack_kind , rk , ti2 , tr2 , Wa1
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,2,L1) , Ch(Ido,L1,2) , Wa1(1)
-      IF ( Ido>2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      dimension Cc(Ido,2,l1) , Ch(Ido,l1,2) , Wa1(1)
+      if ( Ido>2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                Ch(i-1,k,1) = Cc(i-1,1,k) + Cc(i-1,2,k)
                tr2 = Cc(i-1,1,k) - Cc(i-1,2,k)
                Ch(i,k,1) = Cc(i,1,k) + Cc(i,2,k)
                ti2 = Cc(i,1,k) - Cc(i,2,k)
                Ch(i,k,2) = Wa1(i-1)*ti2 + Wa1(i)*tr2
                Ch(i-1,k,2) = Wa1(i-1)*tr2 - Wa1(i)*ti2
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          Ch(1,k,1) = Cc(1,1,k) + Cc(1,2,k)
          Ch(1,k,2) = Cc(1,1,k) - Cc(1,2,k)
          Ch(2,k,1) = Cc(2,1,k) + Cc(2,2,k)
          Ch(2,k,2) = Cc(2,1,k) - Cc(2,2,k)
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSB3.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSB3(Ido,L1,Cc,Ch,Wa1,Wa2)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passb3(Ido,l1,Cc,Ch,Wa1,Wa2)
+      use fftpack_kind
+      implicit none
 !*--PASSB3882
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
-         & FFTPACK_KIND , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
-      INTEGER i , Ido , k , L1
+      real Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
+         & fftpack_kind , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,3,L1) , Ch(Ido,L1,3) , Wa1(1) , Wa2(1)
+      dimension Cc(Ido,3,l1) , Ch(Ido,l1,3) , Wa1(1) , Wa2(1)
 !     *** TAUI IS SQRT(3)/2 ***
-      DATA taur , taui/ - 0.5D0 , 0.86602540378443864676D0/
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      data taur , taui/ - 0.5d0 , 0.86602540378443864676d0/
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                tr2 = Cc(i-1,2,k) + Cc(i-1,3,k)
                cr2 = Cc(i-1,1,k) + taur*tr2
                Ch(i-1,k,1) = Cc(i-1,1,k) + tr2
@@ -907,11 +907,11 @@
                Ch(i-1,k,2) = Wa1(i-1)*dr2 - Wa1(i)*di2
                Ch(i,k,3) = Wa2(i-1)*di3 + Wa2(i)*dr3
                Ch(i-1,k,3) = Wa2(i-1)*dr3 - Wa2(i)*di3
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          tr2 = Cc(1,2,k) + Cc(1,3,k)
          cr2 = Cc(1,1,k) + taur*tr2
          Ch(1,k,1) = Cc(1,1,k) + tr2
@@ -924,25 +924,25 @@
          Ch(1,k,3) = cr2 + ci3
          Ch(2,k,2) = ci2 + cr3
          Ch(2,k,3) = ci2 - cr3
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSB4.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSB4(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passb4(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3)
+      use fftpack_kind
+      implicit none
 !*--PASSB4934
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , FFTPACK_KIND , &
+      real Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , fftpack_kind , &
          & rk , ti1 , ti2 , ti3 , ti4 , tr1 , tr2 , tr3 , tr4 , Wa1 ,   &
          & Wa2
-      REAL Wa3
-      INTEGER i , Ido , k , L1
+      real Wa3
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,4,L1) , Ch(Ido,L1,4) , Wa1(1) , Wa2(1) , Wa3(1)
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      dimension Cc(Ido,4,l1) , Ch(Ido,l1,4) , Wa1(1) , Wa2(1) , Wa3(1)
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                ti1 = Cc(i,1,k) - Cc(i,3,k)
                ti2 = Cc(i,1,k) + Cc(i,3,k)
                ti3 = Cc(i,2,k) + Cc(i,4,k)
@@ -965,11 +965,11 @@
                Ch(i,k,3) = Wa2(i-1)*ci3 + Wa2(i)*cr3
                Ch(i-1,k,4) = Wa3(i-1)*cr4 - Wa3(i)*ci4
                Ch(i,k,4) = Wa3(i-1)*ci4 + Wa3(i)*cr4
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          ti1 = Cc(2,1,k) - Cc(2,3,k)
          ti2 = Cc(2,1,k) + Cc(2,3,k)
          tr4 = Cc(2,4,k) - Cc(2,2,k)
@@ -986,32 +986,32 @@
          Ch(1,k,4) = tr1 - tr4
          Ch(2,k,2) = ti1 + ti4
          Ch(2,k,4) = ti1 - ti4
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSB5.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSB5(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passb5(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
+      use fftpack_kind
+      implicit none
 !*--PASSB5996
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
+      real Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
          & di2 , di3 , di4 , di5 , dr2 , dr3 , dr4 , dr5 ,              &
-         & FFTPACK_KIND , rk
-      REAL ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
+         & fftpack_kind , rk
+      real ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
          & tr3 , tr4 , tr5 , Wa1 , Wa2 , Wa3 , Wa4
-      INTEGER i , Ido , k , L1
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,5,L1) , Ch(Ido,L1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
+      dimension Cc(Ido,5,l1) , Ch(Ido,l1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
               & Wa4(1)
 !     *** TR11=COS(2*PI/5), TI11=SIN(2*PI/5)
 !     *** TR12=COS(4*PI/5), TI12=SIN(4*PI/5)
-      DATA tr11 , ti11 , tr12 , ti12/0.3090169943749474241D0 ,          &
-         & 0.95105651629515357212D0 , -0.8090169943749474241D0 ,        &
-         & 0.58778525229247312917D0/
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      data tr11 , ti11 , tr12 , ti12/0.3090169943749474241d0 ,          &
+         & 0.95105651629515357212d0 , -0.8090169943749474241d0 ,        &
+         & 0.58778525229247312917d0/
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                ti5 = Cc(i,2,k) - Cc(i,5,k)
                ti2 = Cc(i,2,k) + Cc(i,5,k)
                ti4 = Cc(i,3,k) - Cc(i,4,k)
@@ -1046,11 +1046,11 @@
                Ch(i,k,4) = Wa3(i-1)*di4 + Wa3(i)*dr4
                Ch(i-1,k,5) = Wa4(i-1)*dr5 - Wa4(i)*di5
                Ch(i,k,5) = Wa4(i-1)*di5 + Wa4(i)*dr5
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          ti5 = Cc(2,2,k) - Cc(2,5,k)
          ti2 = Cc(2,2,k) + Cc(2,5,k)
          ti4 = Cc(2,3,k) - Cc(2,4,k)
@@ -1077,185 +1077,185 @@
          Ch(1,k,4) = cr3 + ci4
          Ch(2,k,4) = ci3 - cr4
          Ch(2,k,5) = ci2 - cr5
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSF(Nac,Ido,Ip,L1,Idl1,Cc,C1,C2,Ch,Ch2,Wa)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passf(Nac,Ido,Ip,l1,Idl1,Cc,c1,c2,Ch,Ch2,Wa)
+      use fftpack_kind
+      implicit none
 !*--PASSF1087
 !*** Start of declarations inserted by SPAG
-      REAL C1 , C2 , Cc , Ch , Ch2 , FFTPACK_KIND , rk , Wa , wai , war
-      INTEGER i , idij , idj , idl , Idl1 , idlj , Ido , idot , idp ,   &
-            & ik , inc , Ip , ipp2 , ipph , j , jc , k , l , L1 , lc
-      INTEGER Nac , nt
+      real c1 , c2 , Cc , Ch , Ch2 , fftpack_kind , rk , Wa , wai , war
+      integer i , idij , idj , idl , Idl1 , idlj , Ido , idot , idp ,   &
+            & ik , inc , Ip , ipp2 , ipph , j , jc , k , l , l1 , lc
+      integer Nac , nt
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,L1,Ip) , Cc(Ido,Ip,L1) , C1(Ido,L1,Ip) , Wa(1) , &
-              & C2(Idl1,Ip) , Ch2(Idl1,Ip)
+      dimension Ch(Ido,l1,Ip) , Cc(Ido,Ip,l1) , c1(Ido,l1,Ip) , Wa(1) , &
+              & c2(Idl1,Ip) , Ch2(Idl1,Ip)
       idot = Ido/2
       nt = Ip*Idl1
       ipp2 = Ip + 2
       ipph = (Ip+1)/2
       idp = Ip*Ido
 !
-      IF ( Ido<L1 ) THEN
-         DO j = 2 , ipph
+      if ( Ido<l1 ) then
+         do j = 2 , ipph
             jc = ipp2 - j
-            DO i = 1 , Ido
-               DO k = 1 , L1
+            do i = 1 , Ido
+               do k = 1 , l1
                   Ch(i,k,j) = Cc(i,j,k) + Cc(i,jc,k)
                   Ch(i,k,jc) = Cc(i,j,k) - Cc(i,jc,k)
-               ENDDO
-            ENDDO
-         ENDDO
-         DO i = 1 , Ido
-            DO k = 1 , L1
+               enddo
+            enddo
+         enddo
+         do i = 1 , Ido
+            do k = 1 , l1
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ELSE
-         DO j = 2 , ipph
+            enddo
+         enddo
+      else
+         do j = 2 , ipph
             jc = ipp2 - j
-            DO k = 1 , L1
-               DO i = 1 , Ido
+            do k = 1 , l1
+               do i = 1 , Ido
                   Ch(i,k,j) = Cc(i,j,k) + Cc(i,jc,k)
                   Ch(i,k,jc) = Cc(i,j,k) - Cc(i,jc,k)
-               ENDDO
-            ENDDO
-         ENDDO
-         DO k = 1 , L1
-            DO i = 1 , Ido
+               enddo
+            enddo
+         enddo
+         do k = 1 , l1
+            do i = 1 , Ido
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ENDIF
+            enddo
+         enddo
+      endif
       idl = 2 - Ido
       inc = 0
-      DO l = 2 , ipph
+      do l = 2 , ipph
          lc = ipp2 - l
          idl = idl + Ido
-         DO ik = 1 , Idl1
-            C2(ik,l) = Ch2(ik,1) + Wa(idl-1)*Ch2(ik,2)
-            C2(ik,lc) = -Wa(idl)*Ch2(ik,Ip)
-         ENDDO
+         do ik = 1 , Idl1
+            c2(ik,l) = Ch2(ik,1) + Wa(idl-1)*Ch2(ik,2)
+            c2(ik,lc) = -Wa(idl)*Ch2(ik,Ip)
+         enddo
          idlj = idl
          inc = inc + Ido
-         DO j = 3 , ipph
+         do j = 3 , ipph
             jc = ipp2 - j
             idlj = idlj + inc
-            IF ( idlj>idp ) idlj = idlj - idp
+            if ( idlj>idp ) idlj = idlj - idp
             war = Wa(idlj-1)
             wai = Wa(idlj)
-            DO ik = 1 , Idl1
-               C2(ik,l) = C2(ik,l) + war*Ch2(ik,j)
-               C2(ik,lc) = C2(ik,lc) - wai*Ch2(ik,jc)
-            ENDDO
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
-         DO ik = 1 , Idl1
+            do ik = 1 , Idl1
+               c2(ik,l) = c2(ik,l) + war*Ch2(ik,j)
+               c2(ik,lc) = c2(ik,lc) - wai*Ch2(ik,jc)
+            enddo
+         enddo
+      enddo
+      do j = 2 , ipph
+         do ik = 1 , Idl1
             Ch2(ik,1) = Ch2(ik,1) + Ch2(ik,j)
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
+         enddo
+      enddo
+      do j = 2 , ipph
          jc = ipp2 - j
-         DO ik = 2 , Idl1 , 2
-            Ch2(ik-1,j) = C2(ik-1,j) - C2(ik,jc)
-            Ch2(ik-1,jc) = C2(ik-1,j) + C2(ik,jc)
-            Ch2(ik,j) = C2(ik,j) + C2(ik-1,jc)
-            Ch2(ik,jc) = C2(ik,j) - C2(ik-1,jc)
-         ENDDO
-      ENDDO
+         do ik = 2 , Idl1 , 2
+            Ch2(ik-1,j) = c2(ik-1,j) - c2(ik,jc)
+            Ch2(ik-1,jc) = c2(ik-1,j) + c2(ik,jc)
+            Ch2(ik,j) = c2(ik,j) + c2(ik-1,jc)
+            Ch2(ik,jc) = c2(ik,j) - c2(ik-1,jc)
+         enddo
+      enddo
       Nac = 1
-      IF ( Ido==2 ) RETURN
+      if ( Ido==2 ) return
       Nac = 0
-      DO ik = 1 , Idl1
-         C2(ik,1) = Ch2(ik,1)
-      ENDDO
-      DO j = 2 , Ip
-         DO k = 1 , L1
-            C1(1,k,j) = Ch(1,k,j)
-            C1(2,k,j) = Ch(2,k,j)
-         ENDDO
-      ENDDO
-      IF ( idot>L1 ) THEN
+      do ik = 1 , Idl1
+         c2(ik,1) = Ch2(ik,1)
+      enddo
+      do j = 2 , Ip
+         do k = 1 , l1
+            c1(1,k,j) = Ch(1,k,j)
+            c1(2,k,j) = Ch(2,k,j)
+         enddo
+      enddo
+      if ( idot>l1 ) then
          idj = 2 - Ido
-         DO j = 2 , Ip
+         do j = 2 , Ip
             idj = idj + Ido
-            DO k = 1 , L1
+            do k = 1 , l1
                idij = idj
-               DO i = 4 , Ido , 2
+               do i = 4 , Ido , 2
                   idij = idij + 2
-                  C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) + Wa(idij)       &
+                  c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) + Wa(idij)       &
                               & *Ch(i,k,j)
-                  C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) - Wa(idij)           &
+                  c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) - Wa(idij)           &
                             & *Ch(i-1,k,j)
-               ENDDO
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
+               enddo
+            enddo
+         enddo
+         goto 99999
+      endif
       idij = 0
-      DO j = 2 , Ip
+      do j = 2 , Ip
          idij = idij + 2
-         DO i = 4 , Ido , 2
+         do i = 4 , Ido , 2
             idij = idij + 2
-            DO k = 1 , L1
-               C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) + Wa(idij)*Ch(i,k,j)
-               C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) - Wa(idij)*Ch(i-1,k,j)
-            ENDDO
-         ENDDO
-      ENDDO
-      RETURN
-99999 END
+            do k = 1 , l1
+               c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) + Wa(idij)*Ch(i,k,j)
+               c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) - Wa(idij)*Ch(i-1,k,j)
+            enddo
+         enddo
+      enddo
+      return
+99999 end
 !*==PASSF2.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSF2(Ido,L1,Cc,Ch,Wa1)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passf2(Ido,l1,Cc,Ch,Wa1)
+      use fftpack_kind
+      implicit none
 !*--PASSF21216
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , FFTPACK_KIND , rk , ti2 , tr2 , Wa1
-      INTEGER i , Ido , k , L1
+      real Cc , Ch , fftpack_kind , rk , ti2 , tr2 , Wa1
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,2,L1) , Ch(Ido,L1,2) , Wa1(1)
-      IF ( Ido>2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      dimension Cc(Ido,2,l1) , Ch(Ido,l1,2) , Wa1(1)
+      if ( Ido>2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                Ch(i-1,k,1) = Cc(i-1,1,k) + Cc(i-1,2,k)
                tr2 = Cc(i-1,1,k) - Cc(i-1,2,k)
                Ch(i,k,1) = Cc(i,1,k) + Cc(i,2,k)
                ti2 = Cc(i,1,k) - Cc(i,2,k)
                Ch(i,k,2) = Wa1(i-1)*ti2 - Wa1(i)*tr2
                Ch(i-1,k,2) = Wa1(i-1)*tr2 + Wa1(i)*ti2
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          Ch(1,k,1) = Cc(1,1,k) + Cc(1,2,k)
          Ch(1,k,2) = Cc(1,1,k) - Cc(1,2,k)
          Ch(2,k,1) = Cc(2,1,k) + Cc(2,2,k)
          Ch(2,k,2) = Cc(2,1,k) - Cc(2,2,k)
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSF3.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSF3(Ido,L1,Cc,Ch,Wa1,Wa2)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passf3(Ido,l1,Cc,Ch,Wa1,Wa2)
+      use fftpack_kind
+      implicit none
 !*--PASSF31247
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
-         & FFTPACK_KIND , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
-      INTEGER i , Ido , k , L1
+      real Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
+         & fftpack_kind , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,3,L1) , Ch(Ido,L1,3) , Wa1(1) , Wa2(1)
+      dimension Cc(Ido,3,l1) , Ch(Ido,l1,3) , Wa1(1) , Wa2(1)
 !     *** TAUI IS -SQRT(3)/2 ***
-      DATA taur , taui/ - 0.5D0 , -0.86602540378443864676D0/
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      data taur , taui/ - 0.5d0 , -0.86602540378443864676d0/
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                tr2 = Cc(i-1,2,k) + Cc(i-1,3,k)
                cr2 = Cc(i-1,1,k) + taur*tr2
                Ch(i-1,k,1) = Cc(i-1,1,k) + tr2
@@ -1272,11 +1272,11 @@
                Ch(i-1,k,2) = Wa1(i-1)*dr2 + Wa1(i)*di2
                Ch(i,k,3) = Wa2(i-1)*di3 - Wa2(i)*dr3
                Ch(i-1,k,3) = Wa2(i-1)*dr3 + Wa2(i)*di3
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          tr2 = Cc(1,2,k) + Cc(1,3,k)
          cr2 = Cc(1,1,k) + taur*tr2
          Ch(1,k,1) = Cc(1,1,k) + tr2
@@ -1289,25 +1289,25 @@
          Ch(1,k,3) = cr2 + ci3
          Ch(2,k,2) = ci2 + cr3
          Ch(2,k,3) = ci2 - cr3
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSF4.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSF4(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passf4(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3)
+      use fftpack_kind
+      implicit none
 !*--PASSF41299
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , FFTPACK_KIND , &
+      real Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , fftpack_kind , &
          & rk , ti1 , ti2 , ti3 , ti4 , tr1 , tr2 , tr3 , tr4 , Wa1 ,   &
          & Wa2
-      REAL Wa3
-      INTEGER i , Ido , k , L1
+      real Wa3
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,4,L1) , Ch(Ido,L1,4) , Wa1(1) , Wa2(1) , Wa3(1)
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      dimension Cc(Ido,4,l1) , Ch(Ido,l1,4) , Wa1(1) , Wa2(1) , Wa3(1)
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                ti1 = Cc(i,1,k) - Cc(i,3,k)
                ti2 = Cc(i,1,k) + Cc(i,3,k)
                ti3 = Cc(i,2,k) + Cc(i,4,k)
@@ -1330,11 +1330,11 @@
                Ch(i,k,3) = Wa2(i-1)*ci3 - Wa2(i)*cr3
                Ch(i-1,k,4) = Wa3(i-1)*cr4 + Wa3(i)*ci4
                Ch(i,k,4) = Wa3(i-1)*ci4 - Wa3(i)*cr4
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          ti1 = Cc(2,1,k) - Cc(2,3,k)
          ti2 = Cc(2,1,k) + Cc(2,3,k)
          tr4 = Cc(2,2,k) - Cc(2,4,k)
@@ -1351,32 +1351,32 @@
          Ch(1,k,4) = tr1 - tr4
          Ch(2,k,2) = ti1 + ti4
          Ch(2,k,4) = ti1 - ti4
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==PASSF5.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE PASSF5(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine passf5(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
+      use fftpack_kind
+      implicit none
 !*--PASSF51361
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
+      real Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
          & di2 , di3 , di4 , di5 , dr2 , dr3 , dr4 , dr5 ,              &
-         & FFTPACK_KIND , rk
-      REAL ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
+         & fftpack_kind , rk
+      real ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
          & tr3 , tr4 , tr5 , Wa1 , Wa2 , Wa3 , Wa4
-      INTEGER i , Ido , k , L1
+      integer i , Ido , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,5,L1) , Ch(Ido,L1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
+      dimension Cc(Ido,5,l1) , Ch(Ido,l1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
               & Wa4(1)
 !     *** TR11=COS(2*PI/5), TI11=-SIN(2*PI/5)
 !     *** TR12=-COS(4*PI/5), TI12=-SIN(4*PI/5)
-      DATA tr11 , ti11 , tr12 , ti12/0.3090169943749474241D0 ,          &
-         & -0.95105651629515357212D0 , -0.8090169943749474241D0 ,       &
-         & -0.58778525229247312917D0/
-      IF ( Ido/=2 ) THEN
-         DO k = 1 , L1
-            DO i = 2 , Ido , 2
+      data tr11 , ti11 , tr12 , ti12/0.3090169943749474241d0 ,          &
+         & -0.95105651629515357212d0 , -0.8090169943749474241d0 ,       &
+         & -0.58778525229247312917d0/
+      if ( Ido/=2 ) then
+         do k = 1 , l1
+            do i = 2 , Ido , 2
                ti5 = Cc(i,2,k) - Cc(i,5,k)
                ti2 = Cc(i,2,k) + Cc(i,5,k)
                ti4 = Cc(i,3,k) - Cc(i,4,k)
@@ -1411,11 +1411,11 @@
                Ch(i,k,4) = Wa3(i-1)*di4 - Wa3(i)*dr4
                Ch(i-1,k,5) = Wa4(i-1)*dr5 + Wa4(i)*di5
                Ch(i,k,5) = Wa4(i-1)*di5 - Wa4(i)*dr5
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         goto 99999
+      endif
+      do k = 1 , l1
          ti5 = Cc(2,2,k) - Cc(2,5,k)
          ti2 = Cc(2,2,k) + Cc(2,5,k)
          ti4 = Cc(2,3,k) - Cc(2,4,k)
@@ -1442,28 +1442,28 @@
          Ch(1,k,4) = cr3 + ci4
          Ch(2,k,4) = ci3 - cr4
          Ch(2,k,5) = ci2 - cr5
-      ENDDO
-      RETURN
-99999 END
+      enddo
+      return
+99999 end
 !*==RADB2.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADB2(Ido,L1,Cc,Ch,Wa1)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radb2(Ido,l1,Cc,Ch,Wa1)
+      use fftpack_kind
+      implicit none
 !*--RADB21452
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , FFTPACK_KIND , rk , ti2 , tr2 , Wa1
-      INTEGER i , ic , Ido , idp2 , k , L1
+      real Cc , Ch , fftpack_kind , rk , ti2 , tr2 , Wa1
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,2,L1) , Ch(Ido,L1,2) , Wa1(1)
-      DO k = 1 , L1
+      dimension Cc(Ido,2,l1) , Ch(Ido,l1,2) , Wa1(1)
+      do k = 1 , l1
          Ch(1,k,1) = Cc(1,1,k) + Cc(Ido,2,k)
          Ch(1,k,2) = Cc(1,1,k) - Cc(Ido,2,k)
-      ENDDO
-      IF ( Ido<2 ) GOTO 99999
-      IF ( Ido/=2 ) THEN
+      enddo
+      if ( Ido<2 ) goto 99999
+      if ( Ido/=2 ) then
          idp2 = Ido + 2
-         DO k = 1 , L1
-            DO i = 3 , Ido , 2
+         do k = 1 , l1
+            do i = 3 , Ido , 2
                ic = idp2 - i
                Ch(i-1,k,1) = Cc(i-1,1,k) + Cc(ic-1,2,k)
                tr2 = Cc(i-1,1,k) - Cc(ic-1,2,k)
@@ -1471,40 +1471,40 @@
                ti2 = Cc(i,1,k) + Cc(ic,2,k)
                Ch(i-1,k,2) = Wa1(i-2)*tr2 - Wa1(i-1)*ti2
                Ch(i,k,2) = Wa1(i-2)*ti2 + Wa1(i-1)*tr2
-            ENDDO
-         ENDDO
-         IF ( MOD(Ido,2)==1 ) RETURN
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         if ( mod(Ido,2)==1 ) return
+      endif
+      do k = 1 , l1
          Ch(Ido,k,1) = Cc(Ido,1,k) + Cc(Ido,1,k)
          Ch(Ido,k,2) = -(Cc(1,2,k)+Cc(1,2,k))
-      ENDDO
-99999 END
+      enddo
+99999 end
 !*==RADB3.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADB3(Ido,L1,Cc,Ch,Wa1,Wa2)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radb3(Ido,l1,Cc,Ch,Wa1,Wa2)
+      use fftpack_kind
+      implicit none
 !*--RADB31487
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
-         & FFTPACK_KIND , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
-      INTEGER i , ic , Ido , idp2 , k , L1
+      real Cc , Ch , ci2 , ci3 , cr2 , cr3 , di2 , di3 , dr2 , dr3 ,    &
+         & fftpack_kind , rk , taui , taur , ti2 , tr2 , Wa1 , Wa2
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,3,L1) , Ch(Ido,L1,3) , Wa1(1) , Wa2(1)
+      dimension Cc(Ido,3,l1) , Ch(Ido,l1,3) , Wa1(1) , Wa2(1)
 !     *** TAUI IS SQRT(3)/2 ***
-      DATA taur , taui/ - 0.5D0 , 0.86602540378443864676D0/
-      DO k = 1 , L1
+      data taur , taui/ - 0.5d0 , 0.86602540378443864676d0/
+      do k = 1 , l1
          tr2 = Cc(Ido,2,k) + Cc(Ido,2,k)
          cr2 = Cc(1,1,k) + taur*tr2
          Ch(1,k,1) = Cc(1,1,k) + tr2
          ci3 = taui*(Cc(1,3,k)+Cc(1,3,k))
          Ch(1,k,2) = cr2 - ci3
          Ch(1,k,3) = cr2 + ci3
-      ENDDO
-      IF ( Ido==1 ) RETURN
+      enddo
+      if ( Ido==1 ) return
       idp2 = Ido + 2
-      DO k = 1 , L1
-         DO i = 3 , Ido , 2
+      do k = 1 , l1
+         do i = 3 , Ido , 2
             ic = idp2 - i
             tr2 = Cc(i-1,3,k) + Cc(ic-1,2,k)
             cr2 = Cc(i-1,1,k) + taur*tr2
@@ -1522,24 +1522,24 @@
             Ch(i,k,2) = Wa1(i-2)*di2 + Wa1(i-1)*dr2
             Ch(i-1,k,3) = Wa2(i-2)*dr3 - Wa2(i-1)*di3
             Ch(i,k,3) = Wa2(i-2)*di3 + Wa2(i-1)*dr3
-         ENDDO
-      ENDDO
-      END
+         enddo
+      enddo
+      end
 !*==RADB4.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADB4(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radb4(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3)
+      use fftpack_kind
+      implicit none
 !*--RADB41532
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , FFTPACK_KIND , &
+      real Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , fftpack_kind , &
          & rk , sqrt2 , ti1 , ti2 , ti3 , ti4 , tr1 , tr2 , tr3 , tr4 , &
          & Wa1
-      REAL Wa2 , Wa3
-      INTEGER i , ic , Ido , idp2 , k , L1
+      real Wa2 , Wa3
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,4,L1) , Ch(Ido,L1,4) , Wa1(1) , Wa2(1) , Wa3(1)
-      DATA sqrt2/1.41421356237309504880D0/
-      DO k = 1 , L1
+      dimension Cc(Ido,4,l1) , Ch(Ido,l1,4) , Wa1(1) , Wa2(1) , Wa3(1)
+      data sqrt2/1.41421356237309504880d0/
+      do k = 1 , l1
          tr1 = Cc(1,1,k) - Cc(Ido,4,k)
          tr2 = Cc(1,1,k) + Cc(Ido,4,k)
          tr3 = Cc(Ido,2,k) + Cc(Ido,2,k)
@@ -1548,12 +1548,12 @@
          Ch(1,k,2) = tr1 - tr4
          Ch(1,k,3) = tr2 - tr3
          Ch(1,k,4) = tr1 + tr4
-      ENDDO
-      IF ( Ido<2 ) GOTO 99999
-      IF ( Ido/=2 ) THEN
+      enddo
+      if ( Ido<2 ) goto 99999
+      if ( Ido/=2 ) then
          idp2 = Ido + 2
-         DO k = 1 , L1
-            DO i = 3 , Ido , 2
+         do k = 1 , l1
+            do i = 3 , Ido , 2
                ic = idp2 - i
                ti1 = Cc(i,1,k) + Cc(ic,4,k)
                ti2 = Cc(i,1,k) - Cc(ic,4,k)
@@ -1577,11 +1577,11 @@
                Ch(i,k,3) = Wa2(i-2)*ci3 + Wa2(i-1)*cr3
                Ch(i-1,k,4) = Wa3(i-2)*cr4 - Wa3(i-1)*ci4
                Ch(i,k,4) = Wa3(i-2)*ci4 + Wa3(i-1)*cr4
-            ENDDO
-         ENDDO
-         IF ( MOD(Ido,2)==1 ) RETURN
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         if ( mod(Ido,2)==1 ) return
+      endif
+      do k = 1 , l1
          ti1 = Cc(1,2,k) + Cc(1,4,k)
          ti2 = Cc(1,4,k) - Cc(1,2,k)
          tr1 = Cc(Ido,1,k) - Cc(Ido,3,k)
@@ -1590,29 +1590,29 @@
          Ch(Ido,k,2) = sqrt2*(tr1-ti1)
          Ch(Ido,k,3) = ti2 + ti2
          Ch(Ido,k,4) = -sqrt2*(tr1+ti1)
-      ENDDO
-99999 END
+      enddo
+99999 end
 !*==RADB5.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADB5(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radb5(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
+      use fftpack_kind
+      implicit none
 !*--RADB51599
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
+      real Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
          & di2 , di3 , di4 , di5 , dr2 , dr3 , dr4 , dr5 ,              &
-         & FFTPACK_KIND , rk
-      REAL ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
+         & fftpack_kind , rk
+      real ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
          & tr3 , tr4 , tr5 , Wa1 , Wa2 , Wa3 , Wa4
-      INTEGER i , ic , Ido , idp2 , k , L1
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,5,L1) , Ch(Ido,L1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
+      dimension Cc(Ido,5,l1) , Ch(Ido,l1,5) , Wa1(1) , Wa2(1) , Wa3(1) ,&
               & Wa4(1)
 !     *** TR11=COS(2*PI/5), TI11=SIN(2*PI/5)
 !     *** TR12=COS(4*PI/5), TI12=SIN(4*PI/5)
-      DATA tr11 , ti11 , tr12 , ti12/0.3090169943749474241D0 ,          &
-         & 0.95105651629515357212D0 , -0.8090169943749474241D0 ,        &
-         & 0.58778525229247312917D0/
-      DO k = 1 , L1
+      data tr11 , ti11 , tr12 , ti12/0.3090169943749474241d0 ,          &
+         & 0.95105651629515357212d0 , -0.8090169943749474241d0 ,        &
+         & 0.58778525229247312917d0/
+      do k = 1 , l1
          ti5 = Cc(1,3,k) + Cc(1,3,k)
          ti4 = Cc(1,5,k) + Cc(1,5,k)
          tr2 = Cc(Ido,2,k) + Cc(Ido,2,k)
@@ -1626,11 +1626,11 @@
          Ch(1,k,3) = cr3 - ci4
          Ch(1,k,4) = cr3 + ci4
          Ch(1,k,5) = cr2 + ci5
-      ENDDO
-      IF ( Ido==1 ) RETURN
+      enddo
+      if ( Ido==1 ) return
       idp2 = Ido + 2
-      DO k = 1 , L1
-         DO i = 3 , Ido , 2
+      do k = 1 , l1
+         do i = 3 , Ido , 2
             ic = idp2 - i
             ti5 = Cc(i,3,k) + Cc(ic,2,k)
             ti2 = Cc(i,3,k) - Cc(ic,2,k)
@@ -1666,206 +1666,206 @@
             Ch(i,k,4) = Wa3(i-2)*di4 + Wa3(i-1)*dr4
             Ch(i-1,k,5) = Wa4(i-2)*dr5 - Wa4(i-1)*di5
             Ch(i,k,5) = Wa4(i-2)*di5 + Wa4(i-1)*dr5
-         ENDDO
-      ENDDO
-      END
+         enddo
+      enddo
+      end
 !*==RADBG.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADBG(Ido,Ip,L1,Idl1,Cc,C1,C2,Ch,Ch2,Wa)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radbg(Ido,Ip,l1,Idl1,Cc,c1,c2,Ch,Ch2,Wa)
+      use fftpack_kind
+      implicit none
 !*--RADBG1676
 !*** Start of declarations inserted by SPAG
-      REAL ai1 , ai2 , ar1 , ar1h , ar2 , ar2h , arg , C1 , C2 , Cc ,   &
-         & Ch , Ch2 , dc2 , dcp , ds2 , dsp , FFTPACK_KIND , rk , tpi , &
+      real ai1 , ai2 , ar1 , ar1h , ar2 , ar2h , arg , c1 , c2 , Cc ,   &
+         & Ch , Ch2 , dc2 , dcp , ds2 , dsp , fftpack_kind , rk , tpi , &
          & Wa
-      INTEGER i , ic , idij , Idl1 , Ido , idp2 , ik , Ip , ipp2 ,      &
-            & ipph , is , j , j2 , jc , k , l , L1 , lc , nbd
+      integer i , ic , idij , Idl1 , Ido , idp2 , ik , Ip , ipp2 ,      &
+            & ipph , is , j , j2 , jc , k , l , l1 , lc , nbd
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,L1,Ip) , Cc(Ido,Ip,L1) , C1(Ido,L1,Ip) ,         &
-              & C2(Idl1,Ip) , Ch2(Idl1,Ip) , Wa(1)
-      DATA tpi/6.28318530717958647692D0/
-      arg = tpi/REAL(Ip,rk)
-      dcp = COS(arg)
-      dsp = SIN(arg)
+      dimension Ch(Ido,l1,Ip) , Cc(Ido,Ip,l1) , c1(Ido,l1,Ip) ,         &
+              & c2(Idl1,Ip) , Ch2(Idl1,Ip) , Wa(1)
+      data tpi/6.28318530717958647692d0/
+      arg = tpi/real(Ip,rk)
+      dcp = cos(arg)
+      dsp = sin(arg)
       idp2 = Ido + 2
       nbd = (Ido-1)/2
       ipp2 = Ip + 2
       ipph = (Ip+1)/2
-      IF ( Ido<L1 ) THEN
-         DO i = 1 , Ido
-            DO k = 1 , L1
+      if ( Ido<l1 ) then
+         do i = 1 , Ido
+            do k = 1 , l1
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ELSE
-         DO k = 1 , L1
-            DO i = 1 , Ido
+            enddo
+         enddo
+      else
+         do k = 1 , l1
+            do i = 1 , Ido
                Ch(i,k,1) = Cc(i,1,k)
-            ENDDO
-         ENDDO
-      ENDIF
-      DO j = 2 , ipph
+            enddo
+         enddo
+      endif
+      do j = 2 , ipph
          jc = ipp2 - j
          j2 = j + j
-         DO k = 1 , L1
+         do k = 1 , l1
             Ch(1,k,j) = Cc(Ido,j2-2,k) + Cc(Ido,j2-2,k)
             Ch(1,k,jc) = Cc(1,j2-1,k) + Cc(1,j2-1,k)
-         ENDDO
-      ENDDO
-      IF ( Ido/=1 ) THEN
-         IF ( nbd<L1 ) THEN
-            DO j = 2 , ipph
+         enddo
+      enddo
+      if ( Ido/=1 ) then
+         if ( nbd<l1 ) then
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO i = 3 , Ido , 2
+               do i = 3 , Ido , 2
                   ic = idp2 - i
-                  DO k = 1 , L1
+                  do k = 1 , l1
                      Ch(i-1,k,j) = Cc(i-1,2*j-1,k) + Cc(ic-1,2*j-2,k)
                      Ch(i-1,k,jc) = Cc(i-1,2*j-1,k) - Cc(ic-1,2*j-2,k)
                      Ch(i,k,j) = Cc(i,2*j-1,k) - Cc(ic,2*j-2,k)
                      Ch(i,k,jc) = Cc(i,2*j-1,k) + Cc(ic,2*j-2,k)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ELSE
-            DO j = 2 , ipph
+                  enddo
+               enddo
+            enddo
+         else
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO k = 1 , L1
-                  DO i = 3 , Ido , 2
+               do k = 1 , l1
+                  do i = 3 , Ido , 2
                      ic = idp2 - i
                      Ch(i-1,k,j) = Cc(i-1,2*j-1,k) + Cc(ic-1,2*j-2,k)
                      Ch(i-1,k,jc) = Cc(i-1,2*j-1,k) - Cc(ic-1,2*j-2,k)
                      Ch(i,k,j) = Cc(i,2*j-1,k) - Cc(ic,2*j-2,k)
                      Ch(i,k,jc) = Cc(i,2*j-1,k) + Cc(ic,2*j-2,k)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ENDIF
-      ENDIF
-      ar1 = 1.0D0
-      ai1 = 0.0D0
-      DO l = 2 , ipph
+                  enddo
+               enddo
+            enddo
+         endif
+      endif
+      ar1 = 1.0d0
+      ai1 = 0.0d0
+      do l = 2 , ipph
          lc = ipp2 - l
          ar1h = dcp*ar1 - dsp*ai1
          ai1 = dcp*ai1 + dsp*ar1
          ar1 = ar1h
-         DO ik = 1 , Idl1
-            C2(ik,l) = Ch2(ik,1) + ar1*Ch2(ik,2)
-            C2(ik,lc) = ai1*Ch2(ik,Ip)
-         ENDDO
+         do ik = 1 , Idl1
+            c2(ik,l) = Ch2(ik,1) + ar1*Ch2(ik,2)
+            c2(ik,lc) = ai1*Ch2(ik,Ip)
+         enddo
          dc2 = ar1
          ds2 = ai1
          ar2 = ar1
          ai2 = ai1
-         DO j = 3 , ipph
+         do j = 3 , ipph
             jc = ipp2 - j
             ar2h = dc2*ar2 - ds2*ai2
             ai2 = dc2*ai2 + ds2*ar2
             ar2 = ar2h
-            DO ik = 1 , Idl1
-               C2(ik,l) = C2(ik,l) + ar2*Ch2(ik,j)
-               C2(ik,lc) = C2(ik,lc) + ai2*Ch2(ik,jc)
-            ENDDO
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
-         DO ik = 1 , Idl1
+            do ik = 1 , Idl1
+               c2(ik,l) = c2(ik,l) + ar2*Ch2(ik,j)
+               c2(ik,lc) = c2(ik,lc) + ai2*Ch2(ik,jc)
+            enddo
+         enddo
+      enddo
+      do j = 2 , ipph
+         do ik = 1 , Idl1
             Ch2(ik,1) = Ch2(ik,1) + Ch2(ik,j)
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
+         enddo
+      enddo
+      do j = 2 , ipph
          jc = ipp2 - j
-         DO k = 1 , L1
-            Ch(1,k,j) = C1(1,k,j) - C1(1,k,jc)
-            Ch(1,k,jc) = C1(1,k,j) + C1(1,k,jc)
-         ENDDO
-      ENDDO
-      IF ( Ido/=1 ) THEN
-         IF ( nbd<L1 ) THEN
-            DO j = 2 , ipph
+         do k = 1 , l1
+            Ch(1,k,j) = c1(1,k,j) - c1(1,k,jc)
+            Ch(1,k,jc) = c1(1,k,j) + c1(1,k,jc)
+         enddo
+      enddo
+      if ( Ido/=1 ) then
+         if ( nbd<l1 ) then
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO i = 3 , Ido , 2
-                  DO k = 1 , L1
-                     Ch(i-1,k,j) = C1(i-1,k,j) - C1(i,k,jc)
-                     Ch(i-1,k,jc) = C1(i-1,k,j) + C1(i,k,jc)
-                     Ch(i,k,j) = C1(i,k,j) + C1(i-1,k,jc)
-                     Ch(i,k,jc) = C1(i,k,j) - C1(i-1,k,jc)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ELSE
-            DO j = 2 , ipph
+               do i = 3 , Ido , 2
+                  do k = 1 , l1
+                     Ch(i-1,k,j) = c1(i-1,k,j) - c1(i,k,jc)
+                     Ch(i-1,k,jc) = c1(i-1,k,j) + c1(i,k,jc)
+                     Ch(i,k,j) = c1(i,k,j) + c1(i-1,k,jc)
+                     Ch(i,k,jc) = c1(i,k,j) - c1(i-1,k,jc)
+                  enddo
+               enddo
+            enddo
+         else
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO k = 1 , L1
-                  DO i = 3 , Ido , 2
-                     Ch(i-1,k,j) = C1(i-1,k,j) - C1(i,k,jc)
-                     Ch(i-1,k,jc) = C1(i-1,k,j) + C1(i,k,jc)
-                     Ch(i,k,j) = C1(i,k,j) + C1(i-1,k,jc)
-                     Ch(i,k,jc) = C1(i,k,j) - C1(i-1,k,jc)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ENDIF
-      ENDIF
-      IF ( Ido==1 ) RETURN
-      DO ik = 1 , Idl1
-         C2(ik,1) = Ch2(ik,1)
-      ENDDO
-      DO j = 2 , Ip
-         DO k = 1 , L1
-            C1(1,k,j) = Ch(1,k,j)
-         ENDDO
-      ENDDO
-      IF ( nbd>L1 ) THEN
+               do k = 1 , l1
+                  do i = 3 , Ido , 2
+                     Ch(i-1,k,j) = c1(i-1,k,j) - c1(i,k,jc)
+                     Ch(i-1,k,jc) = c1(i-1,k,j) + c1(i,k,jc)
+                     Ch(i,k,j) = c1(i,k,j) + c1(i-1,k,jc)
+                     Ch(i,k,jc) = c1(i,k,j) - c1(i-1,k,jc)
+                  enddo
+               enddo
+            enddo
+         endif
+      endif
+      if ( Ido==1 ) return
+      do ik = 1 , Idl1
+         c2(ik,1) = Ch2(ik,1)
+      enddo
+      do j = 2 , Ip
+         do k = 1 , l1
+            c1(1,k,j) = Ch(1,k,j)
+         enddo
+      enddo
+      if ( nbd>l1 ) then
          is = -Ido
-         DO j = 2 , Ip
+         do j = 2 , Ip
             is = is + Ido
-            DO k = 1 , L1
+            do k = 1 , l1
                idij = is
-               DO i = 3 , Ido , 2
+               do i = 3 , Ido , 2
                   idij = idij + 2
-                  C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
+                  c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
                               & *Ch(i,k,j)
-                  C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
+                  c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
                             & *Ch(i-1,k,j)
-               ENDDO
-            ENDDO
-         ENDDO
-      ELSE
+               enddo
+            enddo
+         enddo
+      else
          is = -Ido
-         DO j = 2 , Ip
+         do j = 2 , Ip
             is = is + Ido
             idij = is
-            DO i = 3 , Ido , 2
+            do i = 3 , Ido , 2
                idij = idij + 2
-               DO k = 1 , L1
-                  C1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
+               do k = 1 , l1
+                  c1(i-1,k,j) = Wa(idij-1)*Ch(i-1,k,j) - Wa(idij)       &
                               & *Ch(i,k,j)
-                  C1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
+                  c1(i,k,j) = Wa(idij-1)*Ch(i,k,j) + Wa(idij)           &
                             & *Ch(i-1,k,j)
-               ENDDO
-            ENDDO
-         ENDDO
-      ENDIF
-      END
+               enddo
+            enddo
+         enddo
+      endif
+      end
 !*==RADF2.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADF2(Ido,L1,Cc,Ch,Wa1)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radf2(Ido,l1,Cc,Ch,Wa1)
+      use fftpack_kind
+      implicit none
 !*--RADF21854
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , FFTPACK_KIND , rk , ti2 , tr2 , Wa1
-      INTEGER i , ic , Ido , idp2 , k , L1
+      real Cc , Ch , fftpack_kind , rk , ti2 , tr2 , Wa1
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,2,L1) , Cc(Ido,L1,2) , Wa1(1)
-      DO k = 1 , L1
+      dimension Ch(Ido,2,l1) , Cc(Ido,l1,2) , Wa1(1)
+      do k = 1 , l1
          Ch(1,1,k) = Cc(1,k,1) + Cc(1,k,2)
          Ch(Ido,2,k) = Cc(1,k,1) - Cc(1,k,2)
-      ENDDO
-      IF ( Ido<2 ) GOTO 99999
-      IF ( Ido/=2 ) THEN
+      enddo
+      if ( Ido<2 ) goto 99999
+      if ( Ido/=2 ) then
          idp2 = Ido + 2
-         DO k = 1 , L1
-            DO i = 3 , Ido , 2
+         do k = 1 , l1
+            do i = 3 , Ido , 2
                ic = idp2 - i
                tr2 = Wa1(i-2)*Cc(i-1,k,2) + Wa1(i-1)*Cc(i,k,2)
                ti2 = Wa1(i-2)*Cc(i,k,2) - Wa1(i-1)*Cc(i-1,k,2)
@@ -1873,38 +1873,38 @@
                Ch(ic,2,k) = ti2 - Cc(i,k,1)
                Ch(i-1,1,k) = Cc(i-1,k,1) + tr2
                Ch(ic-1,2,k) = Cc(i-1,k,1) - tr2
-            ENDDO
-         ENDDO
-         IF ( MOD(Ido,2)==1 ) RETURN
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         if ( mod(Ido,2)==1 ) return
+      endif
+      do k = 1 , l1
          Ch(1,2,k) = -Cc(Ido,k,2)
          Ch(Ido,1,k) = Cc(Ido,k,1)
-      ENDDO
-99999 END
+      enddo
+99999 end
 !*==RADF3.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADF3(Ido,L1,Cc,Ch,Wa1,Wa2)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radf3(Ido,l1,Cc,Ch,Wa1,Wa2)
+      use fftpack_kind
+      implicit none
 !*--RADF31889
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , cr2 , di2 , di3 , dr2 , dr3 , FFTPACK_KIND , &
+      real Cc , Ch , ci2 , cr2 , di2 , di3 , dr2 , dr3 , fftpack_kind , &
          & rk , taui , taur , ti2 , ti3 , tr2 , tr3 , Wa1 , Wa2
-      INTEGER i , ic , Ido , idp2 , k , L1
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,3,L1) , Cc(Ido,L1,3) , Wa1(1) , Wa2(1)
+      dimension Ch(Ido,3,l1) , Cc(Ido,l1,3) , Wa1(1) , Wa2(1)
 !     *** TAUI IS -SQRT(3)/2 ***
-      DATA taur , taui/ - 0.5D0 , 0.86602540378443864676D0/
-      DO k = 1 , L1
+      data taur , taui/ - 0.5d0 , 0.86602540378443864676d0/
+      do k = 1 , l1
          cr2 = Cc(1,k,2) + Cc(1,k,3)
          Ch(1,1,k) = Cc(1,k,1) + cr2
          Ch(1,3,k) = taui*(Cc(1,k,3)-Cc(1,k,2))
          Ch(Ido,2,k) = Cc(1,k,1) + taur*cr2
-      ENDDO
-      IF ( Ido==1 ) RETURN
+      enddo
+      if ( Ido==1 ) return
       idp2 = Ido + 2
-      DO k = 1 , L1
-         DO i = 3 , Ido , 2
+      do k = 1 , l1
+         do i = 3 , Ido , 2
             ic = idp2 - i
             dr2 = Wa1(i-2)*Cc(i-1,k,2) + Wa1(i-1)*Cc(i,k,2)
             di2 = Wa1(i-2)*Cc(i,k,2) - Wa1(i-1)*Cc(i-1,k,2)
@@ -1922,36 +1922,36 @@
             Ch(ic-1,2,k) = tr2 - tr3
             Ch(i,3,k) = ti2 + ti3
             Ch(ic,2,k) = ti3 - ti2
-         ENDDO
-      ENDDO
-      END
+         enddo
+      enddo
+      end
 !*==RADF4.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADF4(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radf4(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3)
+      use fftpack_kind
+      implicit none
 !*--RADF41932
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , FFTPACK_KIND , &
+      real Cc , Ch , ci2 , ci3 , ci4 , cr2 , cr3 , cr4 , fftpack_kind , &
          & hsqt2 , rk , ti1 , ti2 , ti3 , ti4 , tr1 , tr2 , tr3 , tr4 , &
          & Wa1
-      REAL Wa2 , Wa3
-      INTEGER i , ic , Ido , idp2 , k , L1
+      real Wa2 , Wa3
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,L1,4) , Ch(Ido,4,L1) , Wa1(1) , Wa2(1) , Wa3(1)
-      DATA hsqt2/0.70710678118654752440D0/
-      DO k = 1 , L1
+      dimension Cc(Ido,l1,4) , Ch(Ido,4,l1) , Wa1(1) , Wa2(1) , Wa3(1)
+      data hsqt2/0.70710678118654752440d0/
+      do k = 1 , l1
          tr1 = Cc(1,k,2) + Cc(1,k,4)
          tr2 = Cc(1,k,1) + Cc(1,k,3)
          Ch(1,1,k) = tr1 + tr2
          Ch(Ido,4,k) = tr2 - tr1
          Ch(Ido,2,k) = Cc(1,k,1) - Cc(1,k,3)
          Ch(1,3,k) = Cc(1,k,4) - Cc(1,k,2)
-      ENDDO
-      IF ( Ido<2 ) GOTO 99999
-      IF ( Ido/=2 ) THEN
+      enddo
+      if ( Ido<2 ) goto 99999
+      if ( Ido/=2 ) then
          idp2 = Ido + 2
-         DO k = 1 , L1
-            DO i = 3 , Ido , 2
+         do k = 1 , l1
+            do i = 3 , Ido , 2
                ic = idp2 - i
                cr2 = Wa1(i-2)*Cc(i-1,k,2) + Wa1(i-1)*Cc(i,k,2)
                ci2 = Wa1(i-2)*Cc(i,k,2) - Wa1(i-1)*Cc(i-1,k,2)
@@ -1975,38 +1975,38 @@
                Ch(ic-1,2,k) = tr3 - ti4
                Ch(i,3,k) = tr4 + ti3
                Ch(ic,2,k) = tr4 - ti3
-            ENDDO
-         ENDDO
-         IF ( MOD(Ido,2)==1 ) RETURN
-      ENDIF
-      DO k = 1 , L1
+            enddo
+         enddo
+         if ( mod(Ido,2)==1 ) return
+      endif
+      do k = 1 , l1
          ti1 = -hsqt2*(Cc(Ido,k,2)+Cc(Ido,k,4))
          tr1 = hsqt2*(Cc(Ido,k,2)-Cc(Ido,k,4))
          Ch(Ido,1,k) = tr1 + Cc(Ido,k,1)
          Ch(Ido,3,k) = Cc(Ido,k,1) - tr1
          Ch(1,2,k) = ti1 - Cc(Ido,k,3)
          Ch(1,4,k) = ti1 + Cc(Ido,k,3)
-      ENDDO
-99999 END
+      enddo
+99999 end
 !*==RADF5.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADF5(Ido,L1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radf5(Ido,l1,Cc,Ch,Wa1,Wa2,Wa3,Wa4)
+      use fftpack_kind
+      implicit none
 !*--RADF51995
 !*** Start of declarations inserted by SPAG
-      REAL Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
+      real Cc , Ch , ci2 , ci3 , ci4 , ci5 , cr2 , cr3 , cr4 , cr5 ,    &
          & di2 , di3 , di4 , di5 , dr2 , dr3 , dr4 , dr5 ,              &
-         & FFTPACK_KIND , rk
-      REAL ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
+         & fftpack_kind , rk
+      real ti11 , ti12 , ti2 , ti3 , ti4 , ti5 , tr11 , tr12 , tr2 ,    &
          & tr3 , tr4 , tr5 , Wa1 , Wa2 , Wa3 , Wa4
-      INTEGER i , ic , Ido , idp2 , k , L1
+      integer i , ic , Ido , idp2 , k , l1
 !*** End of declarations inserted by SPAG
-      DIMENSION Cc(Ido,L1,5) , Ch(Ido,5,L1) , Wa1(1) , Wa2(1) , Wa3(1) ,&
+      dimension Cc(Ido,l1,5) , Ch(Ido,5,l1) , Wa1(1) , Wa2(1) , Wa3(1) ,&
               & Wa4(1)
-      DATA tr11 , ti11 , tr12 , ti12/0.3090169943749474241D0 ,          &
-         & 0.95105651629515357212D0 , -0.8090169943749474241D0 ,        &
-         & 0.58778525229247312917D0/
-      DO k = 1 , L1
+      data tr11 , ti11 , tr12 , ti12/0.3090169943749474241d0 ,          &
+         & 0.95105651629515357212d0 , -0.8090169943749474241d0 ,        &
+         & 0.58778525229247312917d0/
+      do k = 1 , l1
          cr2 = Cc(1,k,5) + Cc(1,k,2)
          ci5 = Cc(1,k,5) - Cc(1,k,2)
          cr3 = Cc(1,k,4) + Cc(1,k,3)
@@ -2016,11 +2016,11 @@
          Ch(1,3,k) = ti11*ci5 + ti12*ci4
          Ch(Ido,4,k) = Cc(1,k,1) + tr12*cr2 + tr11*cr3
          Ch(1,5,k) = ti12*ci5 - ti11*ci4
-      ENDDO
-      IF ( Ido==1 ) RETURN
+      enddo
+      if ( Ido==1 ) return
       idp2 = Ido + 2
-      DO k = 1 , L1
-         DO i = 3 , Ido , 2
+      do k = 1 , l1
+         do i = 3 , Ido , 2
             ic = idp2 - i
             dr2 = Wa1(i-2)*Cc(i-1,k,2) + Wa1(i-1)*Cc(i,k,2)
             di2 = Wa1(i-2)*Cc(i,k,2) - Wa1(i-1)*Cc(i-1,k,2)
@@ -2056,498 +2056,498 @@
             Ch(ic-1,4,k) = tr3 - tr4
             Ch(i,5,k) = ti3 + ti4
             Ch(ic,4,k) = ti4 - ti3
-         ENDDO
-      ENDDO
-      END
+         enddo
+      enddo
+      end
 !*==RADFG.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RADFG(Ido,Ip,L1,Idl1,Cc,C1,C2,Ch,Ch2,Wa)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine radfg(Ido,Ip,l1,Idl1,Cc,c1,c2,Ch,Ch2,Wa)
+      use fftpack_kind
+      implicit none
 !*--RADFG2066
 !*** Start of declarations inserted by SPAG
-      REAL ai1 , ai2 , ar1 , ar1h , ar2 , ar2h , arg , C1 , C2 , Cc ,   &
-         & Ch , Ch2 , dc2 , dcp , ds2 , dsp , FFTPACK_KIND , rk , tpi , &
+      real ai1 , ai2 , ar1 , ar1h , ar2 , ar2h , arg , c1 , c2 , Cc ,   &
+         & Ch , Ch2 , dc2 , dcp , ds2 , dsp , fftpack_kind , rk , tpi , &
          & Wa
-      INTEGER i , ic , idij , Idl1 , Ido , idp2 , ik , Ip , ipp2 ,      &
-            & ipph , is , j , j2 , jc , k , l , L1 , lc , nbd
+      integer i , ic , idij , Idl1 , Ido , idp2 , ik , Ip , ipp2 ,      &
+            & ipph , is , j , j2 , jc , k , l , l1 , lc , nbd
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(Ido,L1,Ip) , Cc(Ido,Ip,L1) , C1(Ido,L1,Ip) ,         &
-              & C2(Idl1,Ip) , Ch2(Idl1,Ip) , Wa(1)
-      DATA tpi/6.28318530717958647692D0/
-      arg = tpi/REAL(Ip,rk)
-      dcp = COS(arg)
-      dsp = SIN(arg)
+      dimension Ch(Ido,l1,Ip) , Cc(Ido,Ip,l1) , c1(Ido,l1,Ip) ,         &
+              & c2(Idl1,Ip) , Ch2(Idl1,Ip) , Wa(1)
+      data tpi/6.28318530717958647692d0/
+      arg = tpi/real(Ip,rk)
+      dcp = cos(arg)
+      dsp = sin(arg)
       ipph = (Ip+1)/2
       ipp2 = Ip + 2
       idp2 = Ido + 2
       nbd = (Ido-1)/2
-      IF ( Ido==1 ) THEN
-         DO ik = 1 , Idl1
-            C2(ik,1) = Ch2(ik,1)
-         ENDDO
-      ELSE
-         DO ik = 1 , Idl1
-            Ch2(ik,1) = C2(ik,1)
-         ENDDO
-         DO j = 2 , Ip
-            DO k = 1 , L1
-               Ch(1,k,j) = C1(1,k,j)
-            ENDDO
-         ENDDO
-         IF ( nbd>L1 ) THEN
+      if ( Ido==1 ) then
+         do ik = 1 , Idl1
+            c2(ik,1) = Ch2(ik,1)
+         enddo
+      else
+         do ik = 1 , Idl1
+            Ch2(ik,1) = c2(ik,1)
+         enddo
+         do j = 2 , Ip
+            do k = 1 , l1
+               Ch(1,k,j) = c1(1,k,j)
+            enddo
+         enddo
+         if ( nbd>l1 ) then
             is = -Ido
-            DO j = 2 , Ip
+            do j = 2 , Ip
                is = is + Ido
-               DO k = 1 , L1
+               do k = 1 , l1
                   idij = is
-                  DO i = 3 , Ido , 2
+                  do i = 3 , Ido , 2
                      idij = idij + 2
-                     Ch(i-1,k,j) = Wa(idij-1)*C1(i-1,k,j) + Wa(idij)    &
-                                 & *C1(i,k,j)
-                     Ch(i,k,j) = Wa(idij-1)*C1(i,k,j) - Wa(idij)        &
-                               & *C1(i-1,k,j)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ELSE
+                     Ch(i-1,k,j) = Wa(idij-1)*c1(i-1,k,j) + Wa(idij)    &
+                                 & *c1(i,k,j)
+                     Ch(i,k,j) = Wa(idij-1)*c1(i,k,j) - Wa(idij)        &
+                               & *c1(i-1,k,j)
+                  enddo
+               enddo
+            enddo
+         else
             is = -Ido
-            DO j = 2 , Ip
+            do j = 2 , Ip
                is = is + Ido
                idij = is
-               DO i = 3 , Ido , 2
+               do i = 3 , Ido , 2
                   idij = idij + 2
-                  DO k = 1 , L1
-                     Ch(i-1,k,j) = Wa(idij-1)*C1(i-1,k,j) + Wa(idij)    &
-                                 & *C1(i,k,j)
-                     Ch(i,k,j) = Wa(idij-1)*C1(i,k,j) - Wa(idij)        &
-                               & *C1(i-1,k,j)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ENDIF
-         IF ( nbd<L1 ) THEN
-            DO j = 2 , ipph
+                  do k = 1 , l1
+                     Ch(i-1,k,j) = Wa(idij-1)*c1(i-1,k,j) + Wa(idij)    &
+                                 & *c1(i,k,j)
+                     Ch(i,k,j) = Wa(idij-1)*c1(i,k,j) - Wa(idij)        &
+                               & *c1(i-1,k,j)
+                  enddo
+               enddo
+            enddo
+         endif
+         if ( nbd<l1 ) then
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO i = 3 , Ido , 2
-                  DO k = 1 , L1
-                     C1(i-1,k,j) = Ch(i-1,k,j) + Ch(i-1,k,jc)
-                     C1(i-1,k,jc) = Ch(i,k,j) - Ch(i,k,jc)
-                     C1(i,k,j) = Ch(i,k,j) + Ch(i,k,jc)
-                     C1(i,k,jc) = Ch(i-1,k,jc) - Ch(i-1,k,j)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ELSE
-            DO j = 2 , ipph
+               do i = 3 , Ido , 2
+                  do k = 1 , l1
+                     c1(i-1,k,j) = Ch(i-1,k,j) + Ch(i-1,k,jc)
+                     c1(i-1,k,jc) = Ch(i,k,j) - Ch(i,k,jc)
+                     c1(i,k,j) = Ch(i,k,j) + Ch(i,k,jc)
+                     c1(i,k,jc) = Ch(i-1,k,jc) - Ch(i-1,k,j)
+                  enddo
+               enddo
+            enddo
+         else
+            do j = 2 , ipph
                jc = ipp2 - j
-               DO k = 1 , L1
-                  DO i = 3 , Ido , 2
-                     C1(i-1,k,j) = Ch(i-1,k,j) + Ch(i-1,k,jc)
-                     C1(i-1,k,jc) = Ch(i,k,j) - Ch(i,k,jc)
-                     C1(i,k,j) = Ch(i,k,j) + Ch(i,k,jc)
-                     C1(i,k,jc) = Ch(i-1,k,jc) - Ch(i-1,k,j)
-                  ENDDO
-               ENDDO
-            ENDDO
-         ENDIF
-      ENDIF
-      DO j = 2 , ipph
+               do k = 1 , l1
+                  do i = 3 , Ido , 2
+                     c1(i-1,k,j) = Ch(i-1,k,j) + Ch(i-1,k,jc)
+                     c1(i-1,k,jc) = Ch(i,k,j) - Ch(i,k,jc)
+                     c1(i,k,j) = Ch(i,k,j) + Ch(i,k,jc)
+                     c1(i,k,jc) = Ch(i-1,k,jc) - Ch(i-1,k,j)
+                  enddo
+               enddo
+            enddo
+         endif
+      endif
+      do j = 2 , ipph
          jc = ipp2 - j
-         DO k = 1 , L1
-            C1(1,k,j) = Ch(1,k,j) + Ch(1,k,jc)
-            C1(1,k,jc) = Ch(1,k,jc) - Ch(1,k,j)
-         ENDDO
-      ENDDO
+         do k = 1 , l1
+            c1(1,k,j) = Ch(1,k,j) + Ch(1,k,jc)
+            c1(1,k,jc) = Ch(1,k,jc) - Ch(1,k,j)
+         enddo
+      enddo
 !
-      ar1 = 1.0D0
-      ai1 = 0.0D0
-      DO l = 2 , ipph
+      ar1 = 1.0d0
+      ai1 = 0.0d0
+      do l = 2 , ipph
          lc = ipp2 - l
          ar1h = dcp*ar1 - dsp*ai1
          ai1 = dcp*ai1 + dsp*ar1
          ar1 = ar1h
-         DO ik = 1 , Idl1
-            Ch2(ik,l) = C2(ik,1) + ar1*C2(ik,2)
-            Ch2(ik,lc) = ai1*C2(ik,Ip)
-         ENDDO
+         do ik = 1 , Idl1
+            Ch2(ik,l) = c2(ik,1) + ar1*c2(ik,2)
+            Ch2(ik,lc) = ai1*c2(ik,Ip)
+         enddo
          dc2 = ar1
          ds2 = ai1
          ar2 = ar1
          ai2 = ai1
-         DO j = 3 , ipph
+         do j = 3 , ipph
             jc = ipp2 - j
             ar2h = dc2*ar2 - ds2*ai2
             ai2 = dc2*ai2 + ds2*ar2
             ar2 = ar2h
-            DO ik = 1 , Idl1
-               Ch2(ik,l) = Ch2(ik,l) + ar2*C2(ik,j)
-               Ch2(ik,lc) = Ch2(ik,lc) + ai2*C2(ik,jc)
-            ENDDO
-         ENDDO
-      ENDDO
-      DO j = 2 , ipph
-         DO ik = 1 , Idl1
-            Ch2(ik,1) = Ch2(ik,1) + C2(ik,j)
-         ENDDO
-      ENDDO
+            do ik = 1 , Idl1
+               Ch2(ik,l) = Ch2(ik,l) + ar2*c2(ik,j)
+               Ch2(ik,lc) = Ch2(ik,lc) + ai2*c2(ik,jc)
+            enddo
+         enddo
+      enddo
+      do j = 2 , ipph
+         do ik = 1 , Idl1
+            Ch2(ik,1) = Ch2(ik,1) + c2(ik,j)
+         enddo
+      enddo
 !
-      IF ( Ido<L1 ) THEN
-         DO i = 1 , Ido
-            DO k = 1 , L1
+      if ( Ido<l1 ) then
+         do i = 1 , Ido
+            do k = 1 , l1
                Cc(i,1,k) = Ch(i,k,1)
-            ENDDO
-         ENDDO
-      ELSE
-         DO k = 1 , L1
-            DO i = 1 , Ido
+            enddo
+         enddo
+      else
+         do k = 1 , l1
+            do i = 1 , Ido
                Cc(i,1,k) = Ch(i,k,1)
-            ENDDO
-         ENDDO
-      ENDIF
-      DO j = 2 , ipph
+            enddo
+         enddo
+      endif
+      do j = 2 , ipph
          jc = ipp2 - j
          j2 = j + j
-         DO k = 1 , L1
+         do k = 1 , l1
             Cc(Ido,j2-2,k) = Ch(1,k,j)
             Cc(1,j2-1,k) = Ch(1,k,jc)
-         ENDDO
-      ENDDO
-      IF ( Ido==1 ) RETURN
-      IF ( nbd<L1 ) THEN
-         DO j = 2 , ipph
+         enddo
+      enddo
+      if ( Ido==1 ) return
+      if ( nbd<l1 ) then
+         do j = 2 , ipph
             jc = ipp2 - j
             j2 = j + j
-            DO i = 3 , Ido , 2
+            do i = 3 , Ido , 2
                ic = idp2 - i
-               DO k = 1 , L1
+               do k = 1 , l1
                   Cc(i-1,j2-1,k) = Ch(i-1,k,j) + Ch(i-1,k,jc)
                   Cc(ic-1,j2-2,k) = Ch(i-1,k,j) - Ch(i-1,k,jc)
                   Cc(i,j2-1,k) = Ch(i,k,j) + Ch(i,k,jc)
                   Cc(ic,j2-2,k) = Ch(i,k,jc) - Ch(i,k,j)
-               ENDDO
-            ENDDO
-         ENDDO
-         GOTO 99999
-      ENDIF
-      DO j = 2 , ipph
+               enddo
+            enddo
+         enddo
+         goto 99999
+      endif
+      do j = 2 , ipph
          jc = ipp2 - j
          j2 = j + j
-         DO k = 1 , L1
-            DO i = 3 , Ido , 2
+         do k = 1 , l1
+            do i = 3 , Ido , 2
                ic = idp2 - i
                Cc(i-1,j2-1,k) = Ch(i-1,k,j) + Ch(i-1,k,jc)
                Cc(ic-1,j2-2,k) = Ch(i-1,k,j) - Ch(i-1,k,jc)
                Cc(i,j2-1,k) = Ch(i,k,j) + Ch(i,k,jc)
                Cc(ic,j2-2,k) = Ch(i,k,jc) - Ch(i,k,j)
-            ENDDO
-         ENDDO
-      ENDDO
-      RETURN
-99999 END
+            enddo
+         enddo
+      enddo
+      return
+99999 end
 !*==RFFTB1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RFFTB1(N,C,Ch,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine rfftb1(n,c,Ch,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--RFFTB12251
 !*** Start of declarations inserted by SPAG
-      REAL C , Ch , FFTPACK_KIND , rk , Wa
-      INTEGER i , idl1 , ido , Ifac , ip , iw , ix2 , ix3 , ix4 , k1 ,  &
-            & l1 , l2 , N , na , nf
+      real c , Ch , fftpack_kind , rk , Wa
+      integer i , idl1 , ido , Ifac , ip , iw , ix2 , ix3 , ix4 , k1 ,  &
+            & l1 , l2 , n , na , nf
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(*) , C(*) , Wa(*) , Ifac(*)
+      dimension Ch(*) , c(*) , Wa(*) , Ifac(*)
       nf = Ifac(2)
       na = 0
       l1 = 1
       iw = 1
-      DO k1 = 1 , nf
+      do k1 = 1 , nf
          ip = Ifac(k1+2)
          l2 = ip*l1
-         ido = N/l2
+         ido = n/l2
          idl1 = ido*l1
-         IF ( ip==4 ) THEN
+         if ( ip==4 ) then
             ix2 = iw + ido
             ix3 = ix2 + ido
-            IF ( na/=0 ) THEN
-               CALL RADB4(ido,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3))
-            ELSE
-               CALL RADB4(ido,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3))
-            ENDIF
+            if ( na/=0 ) then
+               call radb4(ido,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3))
+            else
+               call radb4(ido,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3))
+            endif
             na = 1 - na
-         ELSEIF ( ip==2 ) THEN
-            IF ( na/=0 ) THEN
-               CALL RADB2(ido,l1,Ch,C,Wa(iw))
-            ELSE
-               CALL RADB2(ido,l1,C,Ch,Wa(iw))
-            ENDIF
+         elseif ( ip==2 ) then
+            if ( na/=0 ) then
+               call radb2(ido,l1,Ch,c,Wa(iw))
+            else
+               call radb2(ido,l1,c,Ch,Wa(iw))
+            endif
             na = 1 - na
-         ELSEIF ( ip==3 ) THEN
+         elseif ( ip==3 ) then
             ix2 = iw + ido
-            IF ( na/=0 ) THEN
-               CALL RADB3(ido,l1,Ch,C,Wa(iw),Wa(ix2))
-            ELSE
-               CALL RADB3(ido,l1,C,Ch,Wa(iw),Wa(ix2))
-            ENDIF
+            if ( na/=0 ) then
+               call radb3(ido,l1,Ch,c,Wa(iw),Wa(ix2))
+            else
+               call radb3(ido,l1,c,Ch,Wa(iw),Wa(ix2))
+            endif
             na = 1 - na
-         ELSEIF ( ip/=5 ) THEN
-            IF ( na/=0 ) THEN
-               CALL RADBG(ido,ip,l1,idl1,Ch,Ch,Ch,C,C,Wa(iw))
-            ELSE
-               CALL RADBG(ido,ip,l1,idl1,C,C,C,Ch,Ch,Wa(iw))
-            ENDIF
-            IF ( ido==1 ) na = 1 - na
-         ELSE
+         elseif ( ip/=5 ) then
+            if ( na/=0 ) then
+               call radbg(ido,ip,l1,idl1,Ch,Ch,Ch,c,c,Wa(iw))
+            else
+               call radbg(ido,ip,l1,idl1,c,c,c,Ch,Ch,Wa(iw))
+            endif
+            if ( ido==1 ) na = 1 - na
+         else
             ix2 = iw + ido
             ix3 = ix2 + ido
             ix4 = ix3 + ido
-            IF ( na/=0 ) THEN
-               CALL RADB5(ido,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ELSE
-               CALL RADB5(ido,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-            ENDIF
+            if ( na/=0 ) then
+               call radb5(ido,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            else
+               call radb5(ido,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+            endif
             na = 1 - na
-         ENDIF
+         endif
          l1 = l2
          iw = iw + (ip-1)*ido
-      ENDDO
-      IF ( na==0 ) RETURN
-      DO i = 1 , N
-         C(i) = Ch(i)
-      ENDDO
-      END
+      enddo
+      if ( na==0 ) return
+      do i = 1 , n
+         c(i) = Ch(i)
+      enddo
+      end
 !*==RFFTF1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RFFTF1(N,C,Ch,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine rfftf1(n,c,Ch,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--RFFTF12321
 !*** Start of declarations inserted by SPAG
-      REAL C , Ch , FFTPACK_KIND , rk , Wa
-      INTEGER i , idl1 , ido , Ifac , ip , iw , ix2 , ix3 , ix4 , k1 ,  &
-            & kh , l1 , l2 , N , na , nf
+      real c , Ch , fftpack_kind , rk , Wa
+      integer i , idl1 , ido , Ifac , ip , iw , ix2 , ix3 , ix4 , k1 ,  &
+            & kh , l1 , l2 , n , na , nf
 !*** End of declarations inserted by SPAG
-      DIMENSION Ch(*) , C(*) , Wa(*) , Ifac(*)
+      dimension Ch(*) , c(*) , Wa(*) , Ifac(*)
       nf = Ifac(2)
       na = 1
-      l2 = N
-      iw = N
-      DO k1 = 1 , nf
+      l2 = n
+      iw = n
+      do k1 = 1 , nf
          kh = nf - k1
          ip = Ifac(kh+3)
          l1 = l2/ip
-         ido = N/l2
+         ido = n/l2
          idl1 = ido*l1
          iw = iw - (ip-1)*ido
          na = 1 - na
-         IF ( ip==4 ) THEN
+         if ( ip==4 ) then
             ix2 = iw + ido
             ix3 = ix2 + ido
-            IF ( na/=0 ) THEN
-               CALL RADF4(ido,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3))
-            ELSE
-               CALL RADF4(ido,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3))
-            ENDIF
-         ELSEIF ( ip/=2 ) THEN
-            IF ( ip==3 ) THEN
+            if ( na/=0 ) then
+               call radf4(ido,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3))
+            else
+               call radf4(ido,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3))
+            endif
+         elseif ( ip/=2 ) then
+            if ( ip==3 ) then
                ix2 = iw + ido
-               IF ( na/=0 ) THEN
-                  CALL RADF3(ido,l1,Ch,C,Wa(iw),Wa(ix2))
-               ELSE
-                  CALL RADF3(ido,l1,C,Ch,Wa(iw),Wa(ix2))
-               ENDIF
-            ELSEIF ( ip/=5 ) THEN
-               IF ( ido==1 ) na = 1 - na
-               IF ( na/=0 ) THEN
-                  CALL RADFG(ido,ip,l1,idl1,Ch,Ch,Ch,C,C,Wa(iw))
+               if ( na/=0 ) then
+                  call radf3(ido,l1,Ch,c,Wa(iw),Wa(ix2))
+               else
+                  call radf3(ido,l1,c,Ch,Wa(iw),Wa(ix2))
+               endif
+            elseif ( ip/=5 ) then
+               if ( ido==1 ) na = 1 - na
+               if ( na/=0 ) then
+                  call radfg(ido,ip,l1,idl1,Ch,Ch,Ch,c,c,Wa(iw))
                   na = 0
-               ELSE
-                  CALL RADFG(ido,ip,l1,idl1,C,C,C,Ch,Ch,Wa(iw))
+               else
+                  call radfg(ido,ip,l1,idl1,c,c,c,Ch,Ch,Wa(iw))
                   na = 1
-               ENDIF
-            ELSE
+               endif
+            else
                ix2 = iw + ido
                ix3 = ix2 + ido
                ix4 = ix3 + ido
-               IF ( na/=0 ) THEN
-                  CALL RADF5(ido,l1,Ch,C,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-               ELSE
-                  CALL RADF5(ido,l1,C,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
-               ENDIF
-            ENDIF
-         ELSEIF ( na/=0 ) THEN
-            CALL RADF2(ido,l1,Ch,C,Wa(iw))
-         ELSE
-            CALL RADF2(ido,l1,C,Ch,Wa(iw))
-         ENDIF
+               if ( na/=0 ) then
+                  call radf5(ido,l1,Ch,c,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+               else
+                  call radf5(ido,l1,c,Ch,Wa(iw),Wa(ix2),Wa(ix3),Wa(ix4))
+               endif
+            endif
+         elseif ( na/=0 ) then
+            call radf2(ido,l1,Ch,c,Wa(iw))
+         else
+            call radf2(ido,l1,c,Ch,Wa(iw))
+         endif
          l2 = l1
-      ENDDO
-      IF ( na==1 ) RETURN
-      DO i = 1 , N
-         C(i) = Ch(i)
-      ENDDO
-      END
+      enddo
+      if ( na==1 ) return
+      do i = 1 , n
+         c(i) = Ch(i)
+      enddo
+      end
 !*==RFFTI1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE RFFTI1(N,Wa,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine rffti1(n,Wa,Ifac)
+      use fftpack_kind
+      implicit none
 !*--RFFTI12391
 !*** Start of declarations inserted by SPAG
-      REAL arg , argh , argld , FFTPACK_KIND , fi , rk , tpi , Wa
-      INTEGER i , ib , ido , Ifac , ii , ip , ipm , is , j , k1 , l1 ,  &
-            & l2 , ld , N , nf , nfm1 , nl , nq , nr , ntry
-      INTEGER ntryh
+      real arg , argh , argld , fftpack_kind , fi , rk , tpi , Wa
+      integer i , ib , ido , Ifac , ii , ip , ipm , is , j , k1 , l1 ,  &
+            & l2 , ld , n , nf , nfm1 , nl , nq , nr , ntry
+      integer ntryh
 !*** End of declarations inserted by SPAG
-      DIMENSION Wa(*) , Ifac(*) , ntryh(4)
-      DATA ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/4 , 2 , 3 , 5/
-      nl = N
+      dimension Wa(*) , Ifac(*) , ntryh(4)
+      data ntryh(1) , ntryh(2) , ntryh(3) , ntryh(4)/4 , 2 , 3 , 5/
+      nl = n
       nf = 0
       j = 0
  100  j = j + 1
-      IF ( j<=4 ) THEN
+      if ( j<=4 ) then
          ntry = ntryh(j)
-      ELSE
+      else
          ntry = ntry + 2
-      ENDIF
+      endif
  200  nq = nl/ntry
       nr = nl - ntry*nq
-      IF ( nr/=0 ) GOTO 100
+      if ( nr/=0 ) goto 100
       nf = nf + 1
       Ifac(nf+2) = ntry
       nl = nq
-      IF ( ntry==2 ) THEN
-         IF ( nf/=1 ) THEN
-            DO i = 2 , nf
+      if ( ntry==2 ) then
+         if ( nf/=1 ) then
+            do i = 2 , nf
                ib = nf - i + 2
                Ifac(ib+2) = Ifac(ib+1)
-            ENDDO
+            enddo
             Ifac(3) = 2
-         ENDIF
-      ENDIF
-      IF ( nl/=1 ) GOTO 200
-      Ifac(1) = N
+         endif
+      endif
+      if ( nl/=1 ) goto 200
+      Ifac(1) = n
       Ifac(2) = nf
-      tpi = 6.28318530717958647692D0
-      argh = tpi/REAL(N,rk)
+      tpi = 6.28318530717958647692d0
+      argh = tpi/real(n,rk)
       is = 0
       nfm1 = nf - 1
       l1 = 1
-      IF ( nfm1==0 ) RETURN
-      DO k1 = 1 , nfm1
+      if ( nfm1==0 ) return
+      do k1 = 1 , nfm1
          ip = Ifac(k1+2)
          ld = 0
          l2 = l1*ip
-         ido = N/l2
+         ido = n/l2
          ipm = ip - 1
-         DO j = 1 , ipm
+         do j = 1 , ipm
             ld = ld + l1
             i = is
-            argld = REAL(ld,rk)*argh
-            fi = 0.0D0
-            DO ii = 3 , ido , 2
+            argld = real(ld,rk)*argh
+            fi = 0.0d0
+            do ii = 3 , ido , 2
                i = i + 2
-               fi = fi + 1.0D0
+               fi = fi + 1.0d0
                arg = fi*argld
-               Wa(i-1) = COS(arg)
-               Wa(i) = SIN(arg)
-            ENDDO
+               Wa(i-1) = cos(arg)
+               Wa(i) = sin(arg)
+            enddo
             is = is + ido
-         ENDDO
+         enddo
          l1 = l2
-      ENDDO
-      END
+      enddo
+      end
 !*==FFTPACK_KIND.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      MODULE FFTPACK_KIND
-      IMPLICIT NONE
+      module fftpack_kind
+      implicit none
 !*--FFTPACK_KIND2459
-      INTEGER , PARAMETER :: RK = KIND(1.0D0)
-      END
+      integer , parameter :: rk = kind(1.0d0)
+      end
 !*==SINT1.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE SINT1(N,War,Was,Xh,X,Ifac)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine sint1(n,War,Was,Xh,x,Ifac)
+      use fftpack_kind
+      implicit none
 !*--SINT12466
 !*** Start of declarations inserted by SPAG
-      INTEGER i , Ifac , k , kc , modn , N , np1 , ns2
-      REAL sqrt3 , t1 , t2 , War , Was , X , Xh , xhold
+      integer i , Ifac , k , kc , modn , n , np1 , ns2
+      real sqrt3 , t1 , t2 , War , Was , x , Xh , xhold
 !*** End of declarations inserted by SPAG
-      DIMENSION War(*) , Was(*) , X(*) , Xh(*) , Ifac(*)
-      DATA sqrt3/1.73205080756887729352D0/
-      DO i = 1 , N
+      dimension War(*) , Was(*) , x(*) , Xh(*) , Ifac(*)
+      data sqrt3/1.73205080756887729352d0/
+      do i = 1 , n
          Xh(i) = War(i)
-         War(i) = X(i)
-      ENDDO
-      IF ( N<2 ) THEN
+         War(i) = x(i)
+      enddo
+      if ( n<2 ) then
          Xh(1) = Xh(1) + Xh(1)
-      ELSEIF ( N==2 ) THEN
+      elseif ( n==2 ) then
          xhold = sqrt3*(Xh(1)+Xh(2))
          Xh(2) = sqrt3*(Xh(1)-Xh(2))
          Xh(1) = xhold
-      ELSE
-         np1 = N + 1
-         ns2 = N/2
-         X(1) = 0.0D0
-         DO k = 1 , ns2
+      else
+         np1 = n + 1
+         ns2 = n/2
+         x(1) = 0.0d0
+         do k = 1 , ns2
             kc = np1 - k
             t1 = Xh(k) - Xh(kc)
             t2 = Was(k)*(Xh(k)+Xh(kc))
-            X(k+1) = t1 + t2
-            X(kc+1) = t2 - t1
-         ENDDO
-         modn = MOD(N,2)
-         IF ( modn/=0 ) X(ns2+2) = 4.0D0*Xh(ns2+1)
-         CALL RFFTF1(np1,X,Xh,War,Ifac)
-         Xh(1) = 0.5D0*X(1)
-         DO i = 3 , N , 2
-            Xh(i-1) = -X(i)
-            Xh(i) = Xh(i-2) + X(i-1)
-         ENDDO
-         IF ( modn==0 ) Xh(N) = -X(N+1)
-      ENDIF
-      DO i = 1 , N
-         X(i) = War(i)
+            x(k+1) = t1 + t2
+            x(kc+1) = t2 - t1
+         enddo
+         modn = mod(n,2)
+         if ( modn/=0 ) x(ns2+2) = 4.0d0*Xh(ns2+1)
+         call rfftf1(np1,x,Xh,War,Ifac)
+         Xh(1) = 0.5d0*x(1)
+         do i = 3 , n , 2
+            Xh(i-1) = -x(i)
+            Xh(i) = Xh(i-2) + x(i-1)
+         enddo
+         if ( modn==0 ) Xh(n) = -x(n+1)
+      endif
+      do i = 1 , n
+         x(i) = War(i)
          War(i) = Xh(i)
-      ENDDO
-      END
+      enddo
+      end
 !*==ZFFTB.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE ZFFTB(N,C,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine zfftb(n,c,Wsave)
+      use fftpack_kind
+      implicit none
 !*--ZFFTB2513
 !*** Start of declarations inserted by SPAG
-      REAL C , Wsave
-      INTEGER iw1 , iw2 , N
+      real c , Wsave
+      integer iw1 , iw2 , n
 !*** End of declarations inserted by SPAG
-      DIMENSION C(1) , Wsave(1)
-      IF ( N==1 ) RETURN
-      iw1 = N + N + 1
-      iw2 = iw1 + N + N
-      CALL CFFTB1(N,C,Wsave,Wsave(iw1),Wsave(iw2))
-      END
+      dimension c(1) , Wsave(1)
+      if ( n==1 ) return
+      iw1 = n + n + 1
+      iw2 = iw1 + n + n
+      call cfftb1(n,c,Wsave,Wsave(iw1),Wsave(iw2))
+      end
 !*==ZFFTF.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE ZFFTF(N,C,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine zfftf(n,c,Wsave)
+      use fftpack_kind
+      implicit none
 !*--ZFFTF2528
 !*** Start of declarations inserted by SPAG
-      REAL C , Wsave
-      INTEGER iw1 , iw2 , N
+      real c , Wsave
+      integer iw1 , iw2 , n
 !*** End of declarations inserted by SPAG
-      DIMENSION C(1) , Wsave(1)
-      IF ( N==1 ) RETURN
-      iw1 = N + N + 1
-      iw2 = iw1 + N + N
-      CALL CFFTF1(N,C,Wsave,Wsave(iw1),Wsave(iw2))
-      END
+      dimension c(1) , Wsave(1)
+      if ( n==1 ) return
+      iw1 = n + n + 1
+      iw2 = iw1 + n + n
+      call cfftf1(n,c,Wsave,Wsave(iw1),Wsave(iw2))
+      end
 !*==ZFFTI.spg  processed by SPAG 6.72Dc at 19:17 on 14 Sep 2021
-      SUBROUTINE ZFFTI(N,Wsave)
-      USE FFTPACK_KIND
-      IMPLICIT NONE
+      subroutine zffti(n,Wsave)
+      use fftpack_kind
+      implicit none
 !*--ZFFTI2543
 !*** Start of declarations inserted by SPAG
-      INTEGER iw1 , iw2 , N
-      REAL Wsave
+      integer iw1 , iw2 , n
+      real Wsave
 !*** End of declarations inserted by SPAG
-      DIMENSION Wsave(1)
-      IF ( N==1 ) RETURN
-      iw1 = N + N + 1
-      iw2 = iw1 + N + N
-      CALL CFFTI1(N,Wsave(iw1),Wsave(iw2))
-      END
+      dimension Wsave(1)
+      if ( n==1 ) return
+      iw1 = n + n + 1
+      iw2 = iw1 + n + n
+      call cffti1(n,Wsave(iw1),Wsave(iw2))
+      end
